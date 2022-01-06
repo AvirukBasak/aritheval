@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
+clear
 gcc -g ./src/main.c -o ./builds/aritheval-debug
+echo
 gdb ./builds/aritheval-debug

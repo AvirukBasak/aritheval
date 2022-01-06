@@ -3,6 +3,7 @@
 # include "stdlib.h"
 # include "ctype.h"
 
+# define CH_NULL (char) 0
 # define STRLEN 2049
 
 # define INVAL_TOKEN 0
@@ -11,12 +12,12 @@
 
 typedef char byte;
 
-const char* const STR_NULL[STRLEN] = { NULL };
-const char* const OPERATORS = "^/*+-";
-const char* const VALID_CHARS = "0123456789( .^/*+-)";
+const char STR_NULL[STRLEN] = { CH_NULL };
+const char* OPERATORS = "^/*+-";
+const char* VALID_CHARS = "0123456789( .^/*+-)";
 
-const char EXPRESSION[STRLEN] = { NULL };
-const char STR_TOKEN[STRLEN] = { NULL };
+const char EXPRESSION[STRLEN] = { CH_NULL };
+const char STR_TOKEN[STRLEN] = { CH_NULL };
 
 /**
  * @brief Returns type of next token and sets STR_TOKEN to that token.
@@ -29,7 +30,7 @@ byte nextToken(const size_t posn)
     char c = EXPRESSION[posn];
     if (!isdigit(c))
     {
-        const size_t* const ptr = strchr(VALID_CHARS, c);
+        const char* ptr = strchr(VALID_CHARS, c);
         if (ptr)
         {
             strncpy(STR_TOKEN, ptr, 1);
