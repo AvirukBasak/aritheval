@@ -30,7 +30,7 @@ int main(const int argc, const char *const argv[])
         printf("aritheval: expression can't end with '%c'\n", EXPRESSION[len - 1]);
         return 4;
     }
-    const double result = eval(0, strlen(EXPRESSION), 3);
-    printf("Result = %.5lf\n", result);
+    eval(0, strlen(EXPRESSION), 3);
+    printf("Result = %s\n", EXPRESSION);
     return 0;
 }

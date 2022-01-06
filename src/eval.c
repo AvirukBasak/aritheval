@@ -1,3 +1,24 @@
+void operate(char* result, size_t len, char op, double num1, double num2)
+{
+    switch (op)
+    {
+        case '^':
+            break;
+        case '/':
+            break;
+        case '*':
+            break;
+        case '+':
+            snprintf(result, len, "%.5lf", num1 + num2);
+            break;
+        case '-':
+            break;
+        default:
+            printf("aritheval: unrecognised operator: %c\n", op);
+            break;
+    }
+}
+
 /**
  * @brief Returns evaluation of an expression
  * 
@@ -5,11 +26,12 @@
  * @param final Final posn of expression
  * @return double 
  */
-double eval(const size_t init, const size_t final, byte op)
+void eval(const size_t init, const size_t final, byte op)
 {
-    double num1 = 0.0;
-    double num2 = 0.0;
-    double rslt = 0.0;
+    char num1[STRLEN] = { CH_NULL };
+    char num2[STRLEN] = { CH_NULL };
+
+    char str_result[STRLEN] = { CH_NULL };
 
     size_t len = strlen(EXPRESSION);
     char *posn = EXPRESSION;
@@ -22,14 +44,27 @@ double eval(const size_t init, const size_t final, byte op)
         switch (token_type)
         {
             case INT_TOKEN:
-                printf("N:%s\n", STR_TOKEN);
+                strncpy(num1, STR_TOKEN, strlen(STR_TOKEN));
                 break;
             case CHAR_TOKEN:
-                // if (OPERATORS[op] == STR_TOKEN[0])
-                printf("O:%s\n", STR_TOKEN);
-                break;
-            case INVAL_TOKEN:
-                exit(4);
+                if (OPERATORS[op] != STR_TOKEN[0])
+                {
+                    strncat(str_result, num1, strlen(num1) - 1);
+                    strncat(str_result, STR_TOKEN, 1);
+                    break;
+                }
+                token_type = nextToken(&posn);
+                switch (token_type)
+                {
+                    case INT_TOKEN:
+                        strncpy(num2, STR_TOKEN, strlen(STR_TOKEN));
+                        break;
+                    case CHAR_TOKEN:
+                        break;
+                }
+                char rslt[STRLEN] = { CH_NULL };
+                operate(rslt, STRLEN, OPERATORS[op], atof(num1), atof(num1));
+                strncat(str_result, rslt, strlen(rslt) - 1);
                 break;
             default:
                 printf("aritheval: logical error, report output to developer\n"
@@ -39,5 +74,5 @@ double eval(const size_t init, const size_t final, byte op)
         }
         i = posn;
     }
-    return 0.0;
+    strncpy(EXPRESSION, str_result, STRCPLEN);
 }
