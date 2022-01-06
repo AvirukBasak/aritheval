@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/aviruk/Codes/build",
-  "command": "/usr/bin/x86_64-linux-gnu-gcc-7   -g   -o CMakeFiles/aritheval.dir/src/main.c.o   -c /home/aviruk/Codes/src/main.c",
-  "file": "/home/aviruk/Codes/src/main.c"
-}
-]

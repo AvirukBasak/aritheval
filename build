@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+gcc -Ofast ./src/main.c -o ./builds/aritheval
