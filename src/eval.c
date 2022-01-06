@@ -66,8 +66,11 @@ void eval(const size_t init, const size_t final, byte op)
                     case INT_TOKEN:
                         strncpy(num2, STR_TOKEN, strlen(STR_TOKEN));
                         break;
-                    case CHAR_TOKEN:
-                        break;
+                    default:
+                        printf("aritheval: logical error, report output to developer\n"
+                               "token_type = %d\n"
+                               "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
+                        exit(9);
                 }
                 char rslt[STRLEN] = { CH_NULL };
                 operate(rslt, STRLEN, OPERATORS[op], atof(num1), atof(num1));
@@ -77,7 +80,7 @@ void eval(const size_t init, const size_t final, byte op)
                 printf("aritheval: logical error, report output to developer\n"
                        "token_type = %d\n"
                        "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
-                break;
+                exit(10);
         }
         i = posn;
     }
