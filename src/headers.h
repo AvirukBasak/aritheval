@@ -13,3 +13,5 @@
 # define INVAL_TOKEN 0
 # define CHAR_TOKEN 1
 # define INT_TOKEN 2
+
+# define RSLT_ACCURACY_FORM "%.5lf"
