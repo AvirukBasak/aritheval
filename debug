@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+gcc -g ./src/main.c -o ./builds/aritheval-debug
+gdb ./builds/aritheval-debug
