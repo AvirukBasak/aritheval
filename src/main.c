@@ -29,7 +29,6 @@ char STR_TOKEN[STRLEN] = { CH_NULL };
  */
 byte nextToken(size_t *posn)
 {
-    STR_TOKEN[0] = 0;
     byte token_type = INVAL_TOKEN;
     size_t len = strlen(EXPRESSION);
 
@@ -41,30 +40,38 @@ byte nextToken(size_t *posn)
     {
         // if character is present in VALID_CHARS, ptr is non-NULL
         char *ptr = strchr(VALID_CHARS, c);
+
+        /* if ptr is non-NULL, increment *posn copy character to STR_TOKEN,
+         * end STR_TOKEN, and set token_type.
+         */
         if (ptr)
         {
-            // if ptr is non-NULL, copy character to STR_TOKEN and return
+            (*posn)++;
             STR_TOKEN[0] = *ptr;
             STR_TOKEN[1] = 0;
-            (*posn)++;
             token_type = CHAR_TOKEN;
         }
-        else {
+        else
             printf("aritheval: invalid character at posn: %ld\n", *posn);
-        }
     }
     else
     {
+        /* strncat() concatenates from null character of string.
+         * since we wish to overwrite the STR_TOKEN with new token, we set this
+         */
+        STR_TOKEN[0] = 0;
+
         // while *posn < len, Loop through the EXPRESSION
         for (size_t i = 0; ; i++, (*posn)++)
         {
             char c = EXPRESSION[*posn];
+
+            // if c is a digit, concatenate it to STR_TOKEN
             if (isdigit(c))
-                // if c is a digit, concatenate it to STR_TOKEN
                 strncat(STR_TOKEN, &c, 1);
             else
             {
-                // return INT_TOKEN code when digits are finished
+                // set token_type, end STR_TOKEN with null and break loop
                 token_type = INT_TOKEN;
                 STR_TOKEN[i] = 0;
                 break;
@@ -92,7 +99,8 @@ double eval(const size_t init, const size_t final, byte op)
     char *posn = EXPRESSION;
 
     // Loop through the entire input
-    for (size_t i = 0; i < len; ) {
+    for (size_t i = 0; i < len; )
+    {
         size_t posn = i;
         byte token_type = nextToken(&posn);
         switch (token_type) {
@@ -106,7 +114,7 @@ double eval(const size_t init, const size_t final, byte op)
                 exit(4);
                 break;
             default:
-                printf("aritheval: logical error\n"
+                printf("aritheval: logical error, report output to developer\n"
                        "token_type = %d\n"
                        "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
                 break;
