@@ -103,7 +103,8 @@ double eval(const size_t init, const size_t final, byte op)
     {
         size_t posn = i;
         byte token_type = nextToken(&posn);
-        switch (token_type) {
+        switch (token_type)
+        {
             case INT_TOKEN:
                 printf("N:%s\n", STR_TOKEN);
                 break;
