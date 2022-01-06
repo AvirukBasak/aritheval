@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-gcc -Ofast ./src/main.c -o ./builds/aritheval
+gcc -Ofast ./src/main.c -o ./builds/aritheval 2>&1 | tee build.log.c
