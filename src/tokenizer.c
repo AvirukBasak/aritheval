@@ -33,6 +33,21 @@ byte nextToken(size_t *posn)
             printf("aritheval: invalid character at posn: %ld\n", *posn);
             exit(5);
         }
+
+        // checks next index for valid characters
+        c = EXPRESSION[*posn];
+        ptr = strchr(VALID_CHARS, c);
+        if (!ptr)
+        {
+            printf("aritheval: invalid character at posn: %ld\n", *posn);
+            exit(5);
+        }
+        else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.'
+             &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
+        {
+            printf("aritheval: unsupported operation, posn: %ld\n", *posn);
+            exit(6);
+        }
     }
     else
     {
@@ -54,7 +69,7 @@ byte nextToken(size_t *posn)
                 strncat(STR_TOKEN, &c, 1);
                 if (dot_found) {
                     printf("aritheval: excess dot found at: %ld\n", *posn);
-                    exit(6);
+                    exit(7);
                 }
                 else
                     dot_found = true;
@@ -66,7 +81,7 @@ byte nextToken(size_t *posn)
                 if (STR_TOKEN[i - 1] == '.')
                 {
                     printf("aritheval: number can't end with a dot: %ld\n", *posn);
-                    exit(7);
+                    exit(8);
                 }
 
                 // set token_type, end STR_TOKEN with null and break loop
