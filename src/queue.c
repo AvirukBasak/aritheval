@@ -80,7 +80,7 @@ void pushDouble(double *queue, size_t *front, size_t *rear, double val)
     if (*rear == QUEUE_LEN)
     {
         printf("aritheval: double queue overflow\n");
-        exit(11);
+        exit(EDQOVFLOW);
     }
     queue[(*rear)++] = val;
 }
