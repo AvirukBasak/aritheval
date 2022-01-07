@@ -33,6 +33,13 @@ byte nextToken(size_t *posn)
             exit(EINVCHAR);
         }
 
+        bool is_op_bracket = false;
+        bool is_cl_bracket = false;
+        if (c == '(')
+            is_op_bracket = true;
+        if (c == ')')
+            is_cl_bracket = true;
+
         // checks next index for valid characters
         c = EXPRESSION[*posn];
         ptr = strchr(VALID_CHARS, c);
@@ -41,7 +48,9 @@ byte nextToken(size_t *posn)
             printf("aritheval: invalid character at posn: %ld\n", *posn);
             exit(EINVCHAR);
         }
-        else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.'
+        else if (c ==  0  && is_cl_bracket) {}
+        else if (c == ')' && is_cl_bracket) {}
+        else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.' && EXPRESSION[*posn] != '('
              &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
         {
             printf("aritheval: unsupported operation at posn: %ld\n", *posn);
@@ -104,8 +113,9 @@ byte nextToken(size_t *posn)
  */
 void tokenize()
 {
+    size_t tk = 0;
     // Loop through the entire input
-    for (size_t i = 0, tk = 0; i < strlen(EXPRESSION); tk++)
+    for (size_t i = 0; i < strlen(EXPRESSION); tk++)
     {
         // if token count exceeded limit
         if (tk > TOKENS)
@@ -119,11 +129,9 @@ void tokenize()
         switch (token_type)
         {
             case INT_TOKEN:
-                printf("N:%s\n", STR_TOKEN);
-                strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
+                strncpy(STR_TOKENS[tk], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             case CHAR_TOKEN:
-                printf("C:%s\n", STR_TOKEN);
                 strncpy(STR_TOKENS[tk], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             default:
@@ -133,5 +141,10 @@ void tokenize()
                 exit(ELOGICAL);
         }
         i = posn;
+    }
+
+    for (size_t i = 0; i < tk; i++)
+    {
+        printf("TOK: %s\n", STR_TOKENS[i]);
     }
 }
