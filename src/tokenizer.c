@@ -67,7 +67,7 @@ byte nextToken(size_t *posn)
             if (c == '.') {
                 strncat(STR_TOKEN, &c, 1);
                 if (dot_found) {
-                    printf("aritheval: excess dot found at: %ld\n", *posn);
+                    printf("aritheval: excess dot found at posn: %ld\n", *posn);
                     exit(7);
                 }
                 else
@@ -103,11 +103,8 @@ byte nextToken(size_t *posn)
  */
 void printAllTokens(const size_t init, const size_t final, byte op)
 {
-    size_t len = strlen(EXPRESSION);
-    char *posn = EXPRESSION;
-
     // Loop through the entire input
-    for (size_t i = 0; i < len; )
+    for (size_t i = init; i < final; )
     {
         size_t posn = i;
         byte token_type = nextToken(&posn);
@@ -115,8 +112,10 @@ void printAllTokens(const size_t init, const size_t final, byte op)
         {
             case INT_TOKEN:
                 printf("N:%s\n", STR_TOKEN);
+                strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             case CHAR_TOKEN:
+                strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
                 printf("C:%s\n", STR_TOKEN);
                 break;
             default:
