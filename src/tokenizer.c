@@ -95,13 +95,9 @@ byte nextToken(size_t *posn)
 }
 
 /**
- * @brief Returns evaluation of an expression
- *
- * @param init Initial posn of expression
- * @param final Final posn of expression
- * @return double
+ * @brief Tokenize expression
  */
-void printAllTokens()
+void tokenize()
 {
     // Loop through the entire input
     for (size_t i = 0; i < strlen(EXPRESSION); )

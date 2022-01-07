@@ -36,7 +36,7 @@ int main(const int argc, const char *const argv[])
      *    evalOp(0, strlen(EXPRESSION), OPERATORS[i]);
      * }
      */
-    printAllTokens();
+    tokenize();
     printf("Result = %s\n", EXPRESSION);
     return 0;
 }
