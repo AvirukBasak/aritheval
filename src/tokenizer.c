@@ -1,6 +1,6 @@
 /**
  * @brief Returns type of next token and sets STR_TOKEN to that token.
- * 
+ *
  * @param posn Posn From where to look for tokens, gets updated.
  * @return byte -- Type of token
  */
@@ -12,7 +12,6 @@ byte nextToken(size_t *posn)
     // get character
     char c = EXPRESSION[*posn];
 
-    // if character isn't a digit
     if (!isdigit(c) && c != '.')
     {
         // if character is present in VALID_CHARS, ptr is non-NULL
@@ -45,7 +44,7 @@ byte nextToken(size_t *posn)
         else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.'
              &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
         {
-            printf("aritheval: unsupported operation, posn: %ld\n", *posn);
+            printf("aritheval: unsupported operation, exp: %s, posn: %ld\n", EXPRESSION, *posn);
             exit(6);
         }
     }
@@ -63,7 +62,7 @@ byte nextToken(size_t *posn)
         for (size_t i = 0; ; i++, (*posn)++)
         {
             char c = EXPRESSION[*posn];
-            
+
             // if c is a digit, concatenate it to STR_TOKEN
             if (c == '.') {
                 strncat(STR_TOKEN, &c, 1);
@@ -93,4 +92,39 @@ byte nextToken(size_t *posn)
     }
     // printf("> %s\n", STR_TOKEN);
     return token_type;
+}
+
+/**
+ * @brief Returns evaluation of an expression
+ *
+ * @param init Initial posn of expression
+ * @param final Final posn of expression
+ * @return double
+ */
+void printAllTokens(const size_t init, const size_t final, byte op)
+{
+    size_t len = strlen(EXPRESSION);
+    char *posn = EXPRESSION;
+
+    // Loop through the entire input
+    for (size_t i = 0; i < len; )
+    {
+        size_t posn = i;
+        byte token_type = nextToken(&posn);
+        switch (token_type)
+        {
+            case INT_TOKEN:
+                printf("N:%s\n", STR_TOKEN);
+                break;
+            case CHAR_TOKEN:
+                printf("C:%s\n", STR_TOKEN);
+                break;
+            default:
+                printf("aritheval: logical error, report output to developer\n"
+                       "token_type = %d\n"
+                       "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
+                exit(10);
+        }
+        i = posn;
+    }
 }
