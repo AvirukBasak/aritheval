@@ -101,10 +101,10 @@ byte nextToken(size_t *posn)
  * @param final Final posn of expression
  * @return double
  */
-void printAllTokens(const size_t init, const size_t final, byte op)
+void printAllTokens()
 {
     // Loop through the entire input
-    for (size_t i = init; i < final; )
+    for (size_t i = 0; i < strlen(EXPRESSION); )
     {
         size_t posn = i;
         byte token_type = nextToken(&posn);
@@ -115,8 +115,8 @@ void printAllTokens(const size_t init, const size_t final, byte op)
                 strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             case CHAR_TOKEN:
-                strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
                 printf("C:%s\n", STR_TOKEN);
+                strncpy(STR_TOKENS[i], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             default:
                 printf("aritheval: logical error, report output to developer\n"
