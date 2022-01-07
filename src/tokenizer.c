@@ -48,8 +48,7 @@ byte nextToken(size_t *posn)
             printf("aritheval: invalid character at posn: %ld\n", *posn);
             exit(EINVCHAR);
         }
-        else if (c ==  0  && is_cl_bracket) {}
-        else if (c == ')' && is_cl_bracket) {}
+        else if (is_cl_bracket) {}
         else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.' && EXPRESSION[*posn] != '('
              &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
         {
