@@ -51,7 +51,7 @@ byte popByte(byte *queue, size_t *front, size_t *rear)
     if (*front == QUEUE_INIT_REAR)
     {
         printf("aritheval: byte queue underflow\n");
-        exit(12);
+        exit(13);
     }
     byte value = queue[(*front)++];
     if (*rear == *front)
@@ -115,7 +115,7 @@ double popDouble(double *queue, size_t *front, size_t *rear)
     if (*front == QUEUE_INIT_REAR)
     {
         printf("aritheval: double queue underflow\n");
-        exit(12);
+        exit(13);
     }
     double value = queue[(*front)++];
     if (*rear == *front)
