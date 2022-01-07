@@ -25,6 +25,11 @@ int main(const int argc, const char *const argv[])
         printf("aritheval: input exceeded limit of %d bytes\n", STRLEN);
         return EEXBLIM;
     }
+    else if (argv[1][0] == 0)
+    {
+        printf("aritheval: expression can't be empty\n");
+        return EEMPEXP;
+    }
     strncpy(EXPRESSION, argv[1], STRCPLEN);
     size_t len = strlen(EXPRESSION);
     if (strchr(".(^/*+-", EXPRESSION[len - 1]))
