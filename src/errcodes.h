@@ -5,13 +5,14 @@
 # define EINVCHAR     5    // invalid character at posn: %ld
 # define EUNSUPOP     6    // unsupported operation at posn: %ld
 # define EEXMXTLEN    7    // exceeded maximum token length of %d bytes
-# define EEXDOT       8    // excess dot found at posn: %ld
-# define ENOENDDOT    9    // number can't end with a dot: %ld
-# define ELOGICAL    10    // logical error, report output to developer
-# define EUNRECOP    11    // unrecognised operator: %c
-# define EBQOVFLOW   12    // byte queue overflow
-# define EBQPEKUND   13    // byte queue underflow (peek)
-# define EBQPOPUND   14    // byte queue underflow (pop)
-# define EDQOVFLOW   15    // double queue overflow
-# define EDQPEKUND   16    // double queue underflow (peek)
-# define EDQPOPUND   17    // double queue underflow (pop)
+# define EEXTKCOUNT   8    // exceeded maximum token count
+# define EEXDOT       9    // excess dot found at posn: %ld
+# define ENOENDDOT   10    // number can't end with a dot: %ld
+# define ELOGICAL    11    // logical error, report output to developer
+# define EUNRECOP    12    // unrecognised operator: %c
+# define EBQOVFLOW   13    // byte queue overflow
+# define EBQPEKUND   14    // byte queue underflow (peek)
+# define EBQPOPUND   15    // byte queue underflow (pop)
+# define EDQOVFLOW   16    // double queue overflow
+# define EDQPEKUND   17    // double queue underflow (peek)
+# define EDQPOPUND   18    // double queue underflow (pop)
