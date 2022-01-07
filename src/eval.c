@@ -22,7 +22,7 @@ void operate(char* result, size_t len, char op, double num1, double num2)
             break;
         default:
             printf("aritheval: unrecognised operator: %c\n", op);
-            break;
+            exit(EUNRECOP);
     }
 }
 

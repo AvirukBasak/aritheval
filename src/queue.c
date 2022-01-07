@@ -16,7 +16,7 @@ void pushByte(byte *queue, size_t *front, size_t *rear, byte ch)
     if (*rear == QUEUE_LEN)
     {
         printf("aritheval: byte queue overflow\n");
-        exit(11);
+        exit(EBQOVFLOW);
     }
     queue[(*rear)++] = ch;
 }
@@ -32,8 +32,8 @@ byte peekByte(byte *queue, size_t *front)
 {
     if (*front == QUEUE_INIT_REAR)
     {
-        printf("aritheval: double queue underflow\n");
-        exit(12);
+        printf("aritheval: byte queue underflow\n");
+        exit(EBQPEKUND);
     }
     return queue[*front];
 }
@@ -51,7 +51,7 @@ byte popByte(byte *queue, size_t *front, size_t *rear)
     if (*front == QUEUE_INIT_REAR)
     {
         printf("aritheval: byte queue underflow\n");
-        exit(13);
+        exit(EBQPOPUND);
     }
     byte value = queue[(*front)++];
     if (*rear == *front)
@@ -97,7 +97,7 @@ double peekDouble(double *queue, size_t *front)
     if (*front == QUEUE_INIT_REAR)
     {
         printf("aritheval: double queue underflow\n");
-        exit(12);
+        exit(EDQPEKUND);
     }
     return queue[*front];
 }
@@ -115,7 +115,7 @@ double popDouble(double *queue, size_t *front, size_t *rear)
     if (*front == QUEUE_INIT_REAR)
     {
         printf("aritheval: double queue underflow\n");
-        exit(13);
+        exit(EDQPOPUND);
     }
     double value = queue[(*front)++];
     if (*rear == *front)

@@ -30,7 +30,7 @@ byte nextToken(size_t *posn)
         else
         {
             printf("aritheval: invalid character at posn: %ld\n", *posn);
-            exit(5);
+            exit(EINVCHAR);
         }
 
         // checks next index for valid characters
@@ -39,13 +39,13 @@ byte nextToken(size_t *posn)
         if (!ptr)
         {
             printf("aritheval: invalid character at posn: %ld\n", *posn);
-            exit(5);
+            exit(EINVCHAR);
         }
         else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.'
              &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
         {
-            printf("aritheval: unsupported operation, exp: %s, posn: %ld\n", EXPRESSION, *posn);
-            exit(6);
+            printf("aritheval: unsupported operation at posn: %ld\n", *posn);
+            exit(EUNSUPOP);
         }
     }
     else
@@ -61,6 +61,11 @@ byte nextToken(size_t *posn)
         // while *posn < len, Loop through the EXPRESSION
         for (size_t i = 0; ; i++, (*posn)++)
         {
+            if (i > TOKEN_LEN)
+            {
+                printf("aritheval: exceeded maximum token length of %d bytes\n", TOKEN_LEN);
+                exit(EEXMXTLEN);
+            }
             char c = EXPRESSION[*posn];
 
             // if c is a digit, concatenate it to STR_TOKEN
@@ -68,7 +73,7 @@ byte nextToken(size_t *posn)
                 strncat(STR_TOKEN, &c, 1);
                 if (dot_found) {
                     printf("aritheval: excess dot found at posn: %ld\n", *posn);
-                    exit(7);
+                    exit(EEXDOT);
                 }
                 else
                     dot_found = true;
@@ -80,7 +85,7 @@ byte nextToken(size_t *posn)
                 if (STR_TOKEN[i - 1] == '.')
                 {
                     printf("aritheval: number can't end with a dot: %ld\n", *posn);
-                    exit(8);
+                    exit(ENOENDDOT);
                 }
 
                 // set token_type, end STR_TOKEN with null and break loop
@@ -90,7 +95,6 @@ byte nextToken(size_t *posn)
             }
         }
     }
-    // printf("> %s\n", STR_TOKEN);
     return token_type;
 }
 
@@ -118,7 +122,7 @@ void tokenize()
                 printf("aritheval: logical error, report output to developer\n"
                        "token_type = %d\n"
                        "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
-                exit(10);
+                exit(ELOGICAL);
         }
         i = posn;
     }
