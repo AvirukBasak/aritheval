@@ -31,12 +31,12 @@ int main(const int argc, const char *const argv[])
         printf("aritheval: expression can't end with '%c'\n", EXPRESSION[len - 1]);
         return 4;
     }
-    printAllTokens(0, strlen(EXPRESSION), OPERATORS[0]);
     /* for (size_t i = 0; i < strlen(OPERATORS); i++)
      * {
      *    evalOp(0, strlen(EXPRESSION), OPERATORS[i]);
      * }
      */
+    printAllTokens(0, strlen(EXPRESSION), OPERATORS[0]);
     printf("Result = %s\n", EXPRESSION);
     return 0;
 }

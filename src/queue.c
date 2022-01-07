@@ -1,3 +1,11 @@
+/**
+ * @brief Pushes item to byte queue.
+ *
+ * @param queue Byte queue pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
+ * @param ch    Character to push
+ */
 void pushByte(byte *queue, size_t *front, size_t *rear, byte ch)
 {
     if (*front == QUEUE_INIT_FRONT)
@@ -13,6 +21,31 @@ void pushByte(byte *queue, size_t *front, size_t *rear, byte ch)
     queue[(*rear)++] = ch;
 }
 
+/**
+ * @brief Peeks at the front of the queue.
+ *
+ * @param queue Byte queue pointer
+ * @param front Queue front pointer
+ * @return byte
+ */
+byte peekByte(byte *queue, size_t *front)
+{
+    if (*front == QUEUE_INIT_REAR)
+    {
+        printf("aritheval: double queue underflow\n");
+        exit(12);
+    }
+    return queue[*front];
+}
+
+/**
+ * @brief Pops front of the queue.
+ *
+ * @param queue Byte queue pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
+ * @return byte
+ */
 byte popByte(byte *queue, size_t *front, size_t *rear)
 {
     if (*front == QUEUE_INIT_REAR)
@@ -29,6 +62,14 @@ byte popByte(byte *queue, size_t *front, size_t *rear)
     return value;
 }
 
+/**
+ * @brief Pushes item to Double queue.
+ *
+ * @param queue Double queue pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
+ * @param val   Value to push
+ */
 void pushDouble(double *queue, size_t *front, size_t *rear, double val)
 {
     if (*front == QUEUE_INIT_FRONT)
@@ -44,6 +85,31 @@ void pushDouble(double *queue, size_t *front, size_t *rear, double val)
     queue[(*rear)++] = val;
 }
 
+/**
+ * @brief Peeks at the front of the queue.
+ *
+ * @param queue Double queue pointer
+ * @param front Queue front pointer
+ * @return double
+ */
+double peekDouble(double *queue, size_t *front)
+{
+    if (*front == QUEUE_INIT_REAR)
+    {
+        printf("aritheval: double queue underflow\n");
+        exit(12);
+    }
+    return queue[*front];
+}
+
+/**
+ * @brief Pops front of the queue.
+ *
+ * @param queue Double queue pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
+ * @return double
+ */
 double popDouble(double *queue, size_t *front, size_t *rear)
 {
     if (*front == QUEUE_INIT_REAR)
@@ -58,11 +124,4 @@ double popDouble(double *queue, size_t *front, size_t *rear)
         *rear = QUEUE_INIT_REAR;
     }
     return value;
-}
-
-void foo()
-{
-    size_t front = QUEUE_INIT_FRONT;
-    size_t rear = QUEUE_INIT_REAR;
-    pushDouble(NUM_QUEUE, &front, &rear, 14.56);
 }
