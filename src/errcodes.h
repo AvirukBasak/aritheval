@@ -1,7 +1,7 @@
 # define ENOEXPR      1    // no expression provided
 # define EEXCARGS     2    // too many arguments provided
 # define EEXBLIM      3    // input exceeded limit of %d bytes
-# define EEMPEXP      4    // input exceeded limit of %d bytes
+# define EEMPEXP      4    // expression can't be empty
 # define EENDCHAR     5    // expression can't end with '%c'
 # define EINVCHAR     6    // invalid character at posn: %ld
 # define EUNSUPOP     7    // unsupported operation at posn: %ld
