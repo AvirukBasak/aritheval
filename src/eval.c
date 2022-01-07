@@ -28,12 +28,12 @@ void operate(char* result, size_t len, char op, double num1, double num2)
 
 /**
  * @brief Returns evaluation of an expression
- * 
+ *
  * @param init Initial posn of expression
  * @param final Final posn of expression
- * @return double 
+ * @return double
  */
-void eval(const size_t init, const size_t final, byte op)
+void evalOp(const size_t init, const size_t final, byte op)
 {
     char num1[STRLEN] = { CH_NULL };
     char num2[STRLEN] = { CH_NULL };
@@ -52,11 +52,13 @@ void eval(const size_t init, const size_t final, byte op)
         {
             case INT_TOKEN:
                 strncpy(num1, STR_TOKEN, strlen(STR_TOKEN));
+                printf("N1:%s\n", num1);
                 break;
             case CHAR_TOKEN:
+                printf("C1:%s\n", STR_TOKEN);
                 if (OPERATORS[op] != STR_TOKEN[0])
                 {
-                    strncat(str_result, num1, strlen(num1) - 1);
+                    strncat(str_result, num1, strlen(num1));
                     strncat(str_result, STR_TOKEN, 1);
                     break;
                 }
@@ -65,7 +67,10 @@ void eval(const size_t init, const size_t final, byte op)
                 {
                     case INT_TOKEN:
                         strncpy(num2, STR_TOKEN, strlen(STR_TOKEN));
+                        printf("N2:%s\n", num2);
                         break;
+                    case CHAR_TOKEN:
+                        printf("C2:%s\n", STR_TOKEN);
                     default:
                         printf("aritheval: logical error, report output to developer\n"
                                "token_type = %d\n"
@@ -74,7 +79,7 @@ void eval(const size_t init, const size_t final, byte op)
                 }
                 char rslt[STRLEN] = { CH_NULL };
                 operate(rslt, STRLEN, OPERATORS[op], atof(num1), atof(num1));
-                strncat(str_result, rslt, strlen(rslt) - 1);
+                strncat(str_result, rslt, strlen(rslt));
                 break;
             default:
                 printf("aritheval: logical error, report output to developer\n"
