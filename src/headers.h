@@ -8,7 +8,7 @@
 
 # define CH_NULL (char) 0
 
-# define TOKENS 1024
+# define MAX_TOKENS 1024
 # define TOKEN_LEN 1024
 # define STRLEN 2049
 # define STRCPLEN (STRLEN - 1)

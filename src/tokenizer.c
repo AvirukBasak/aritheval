@@ -112,14 +112,13 @@ byte nextToken(size_t *posn)
  */
 void tokenize()
 {
-    size_t tk = 0;
     // Loop through the entire input
-    for (size_t i = 0; i < strlen(EXPRESSION); tk++)
+    for (size_t i = 0; i < strlen(EXPRESSION); TOKENS++)
     {
         // if token count exceeded limit
-        if (tk > TOKENS)
+        if (TOKENS > MAX_TOKENS)
         {
-            printf("aritheval: exceeded maximum token count: %ld tokens found\n", tk);
+            printf("aritheval: exceeded maximum token count: %ld tokens found\n", TOKENS);
             exit(EEXTKCOUNT);
         }
 
@@ -128,10 +127,10 @@ void tokenize()
         switch (token_type)
         {
             case INT_TOKEN:
-                strncpy(STR_TOKENS[tk], STR_TOKEN, strlen(STR_TOKEN));
+                strncpy(STR_TOKENS[TOKENS], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             case CHAR_TOKEN:
-                strncpy(STR_TOKENS[tk], STR_TOKEN, strlen(STR_TOKEN));
+                strncpy(STR_TOKENS[TOKENS], STR_TOKEN, strlen(STR_TOKEN));
                 break;
             default:
                 printf("aritheval: logical error, report output to developer\n"
@@ -141,9 +140,5 @@ void tokenize()
         }
         i = posn;
     }
-
-    for (size_t i = 0; i < tk; i++)
-    {
-        printf("TOK: %s\n", STR_TOKENS[i]);
-    }
+    TOKENS--;
 }
