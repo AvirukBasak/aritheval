@@ -7,6 +7,8 @@
 # define false 0
 
 # define CH_NULL (char) 0
+
+# define TOKENS 1024
 # define STRLEN 2049
 # define STRCPLEN (STRLEN - 1)
 
@@ -16,6 +18,6 @@
 
 # define RSLT_ACCURACY_FORM "%.5lf"
 
-# define QUEUE_LEN STRLEN
+# define QUEUE_LEN 1024
 # define QUEUE_INIT_FRONT -1
 # define QUEUE_INIT_REAR -1
