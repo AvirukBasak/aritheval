@@ -8,7 +8,7 @@
 
 # define CH_NULL (char) 0
 
-# define OPERATORS 6
+# define OP_COUNT 6
 
 # define MAX_TOKENS 1024
 # define TOKEN_LEN 1024

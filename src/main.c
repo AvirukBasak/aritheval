@@ -32,7 +32,7 @@ int main(const int argc, const char *const argv[])
     }
     strncpy(EXPRESSION, argv[1], STRCPLEN);
     size_t len = strlen(EXPRESSION);
-    if if (strchr(" )^/*", EXPRESSION[0]))
+    if (strchr(" )^/*", EXPRESSION[0]))
     {
         printf("aritheval: expression can't start with '%c'\n", EXPRESSION[0]);
         return ESTRTCHAR;
