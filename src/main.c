@@ -1,6 +1,7 @@
 # include "headers.h"
 # include "typedefs.c"
 # include "globalvars.c"
+# include "queue.c"
 # include "tokenizer.c"
 # include "eval.c"
 
@@ -30,7 +31,12 @@ int main(const int argc, const char *const argv[])
         printf("aritheval: expression can't end with '%c'\n", EXPRESSION[len - 1]);
         return 4;
     }
-    eval(0, strlen(EXPRESSION), 3);
+    printAllTokens(0, strlen(EXPRESSION), OPERATORS[0]);
+    /* for (size_t i = 0; i < strlen(OPERATORS); i++)
+     * {
+     *    evalOp(0, strlen(EXPRESSION), OPERATORS[i]);
+     * }
+     */
     printf("Result = %s\n", EXPRESSION);
     return 0;
 }
