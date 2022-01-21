@@ -2,6 +2,7 @@
 # include "errcodes.h"
 # include "typedefs.c"
 # include "globalvars.c"
+# include "stack.c"
 # include "queue.c"
 # include "tokenizer.c"
 # include "eval.c"

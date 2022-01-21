@@ -78,9 +78,11 @@ byte nextToken(size_t *posn)
             char c = EXPRESSION[*posn];
 
             // if c is a digit, concatenate it to STR_TOKEN
-            if (c == '.') {
+            if (c == '.')
+            {
                 strncat(STR_TOKEN, &c, 1);
-                if (dot_found) {
+                if (dot_found)
+                {
                     printf("aritheval: excess dot found at posn: %ld\n", *posn);
                     exit(EEXDOT);
                 }

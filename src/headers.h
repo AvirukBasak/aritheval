@@ -12,6 +12,7 @@
 
 # define MAX_TOKENS 1024
 # define TOKEN_LEN 1024
+# define RSLT_LEN 1024
 # define STRLEN 2049
 # define STRCPLEN (STRLEN - 1)
 
@@ -24,3 +25,6 @@
 # define QUEUE_LEN 1024
 # define QUEUE_INIT_FRONT -1
 # define QUEUE_INIT_REAR -1
+
+# define STACK_LEN 1024
+# define STACK_INIT_TOP -1

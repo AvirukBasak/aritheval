@@ -18,3 +18,9 @@
 # define EDQOVFLOW   18    // double queue overflow
 # define EDQPEKUND   19    // double queue underflow (peek)
 # define EDQPOPUND   20    // double queue underflow (pop)
+# define EBSOVFLOW   21    // byte stack overflow
+# define EBSPEKUND   22    // byte stack underflow (peek)
+# define EBSPOPUND   23    // byte stack underflow (pop)
+# define EDSOVFLOW   24    // double stack overflow
+# define EDSPEKUND   25    // double stack underflow (peek)
+# define EDSPOPUND   26    // double stack underflow (pop)

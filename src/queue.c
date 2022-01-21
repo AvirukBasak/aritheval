@@ -6,7 +6,7 @@
  * @param rear  Queue rear pointer
  * @param ch    Character to push
  */
-void pushByte(byte *queue, size_t *front, size_t *rear, byte ch)
+void Queue_Byte_push(byte *queue, size_t *front, size_t *rear, byte ch)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -28,9 +28,9 @@ void pushByte(byte *queue, size_t *front, size_t *rear, byte ch)
  * @param front Queue front pointer
  * @return byte
  */
-byte peekByte(byte *queue, size_t *front)
+byte Queue_Byte_peek(byte *queue, size_t *front)
 {
-    if (*front == QUEUE_INIT_REAR)
+    if (*front == QUEUE_INIT_FRONT)
     {
         printf("aritheval: byte queue underflow\n");
         exit(EBQPEKUND);
@@ -46,9 +46,9 @@ byte peekByte(byte *queue, size_t *front)
  * @param rear  Queue rear pointer
  * @return byte
  */
-byte popByte(byte *queue, size_t *front, size_t *rear)
+byte Queue_Byte_pop(byte *queue, size_t *front, size_t *rear)
 {
-    if (*front == QUEUE_INIT_REAR)
+    if (*front == QUEUE_INIT_FRONT)
     {
         printf("aritheval: byte queue underflow\n");
         exit(EBQPOPUND);
@@ -70,7 +70,7 @@ byte popByte(byte *queue, size_t *front, size_t *rear)
  * @param rear  Queue rear pointer
  * @param val   Value to push
  */
-void pushDouble(double *queue, size_t *front, size_t *rear, double val)
+void Queue_Double_push(double *queue, size_t *front, size_t *rear, double val)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -92,9 +92,9 @@ void pushDouble(double *queue, size_t *front, size_t *rear, double val)
  * @param front Queue front pointer
  * @return double
  */
-double peekDouble(double *queue, size_t *front)
+double Queue_Double_peek(double *queue, size_t *front)
 {
-    if (*front == QUEUE_INIT_REAR)
+    if (*front == QUEUE_INIT_FRONT)
     {
         printf("aritheval: double queue underflow\n");
         exit(EDQPEKUND);
@@ -110,9 +110,9 @@ double peekDouble(double *queue, size_t *front)
  * @param rear  Queue rear pointer
  * @return double
  */
-double popDouble(double *queue, size_t *front, size_t *rear)
+double Queue_Double_pop(double *queue, size_t *front, size_t *rear)
 {
-    if (*front == QUEUE_INIT_REAR)
+    if (*front == QUEUE_INIT_FRONT)
     {
         printf("aritheval: double queue underflow\n");
         exit(EDQPOPUND);
@@ -124,4 +124,24 @@ double popDouble(double *queue, size_t *front, size_t *rear)
         *rear = QUEUE_INIT_REAR;
     }
     return value;
+}
+
+/**
+ * @brief Check if stack empty
+ *
+ * @param top Queue top pointer
+ * @return true if empty
+ */
+bool Queue_isEmpty(size_t *front, size_t *rear) {
+    return *front == QUEUE_INIT_FRONT;
+}
+
+/**
+ * @brief Check if stack full
+ *
+ * @param top Queue top pointer
+ * @return true if full
+ */
+bool Queue_isFull(size_t *front, size_t *rear) {
+    return *rear == QUEUE_LEN;
 }
