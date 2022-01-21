@@ -129,7 +129,8 @@ double Queue_Double_pop(double *queue, size_t *front, size_t *rear)
 /**
  * @brief Check if stack empty
  *
- * @param top Queue top pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
  * @return true if empty
  */
 bool Queue_isEmpty(size_t *front, size_t *rear) {
@@ -139,7 +140,8 @@ bool Queue_isEmpty(size_t *front, size_t *rear) {
 /**
  * @brief Check if stack full
  *
- * @param top Queue top pointer
+ * @param front Queue front pointer
+ * @param rear  Queue rear pointer
  * @return true if full
  */
 bool Queue_isFull(size_t *front, size_t *rear) {

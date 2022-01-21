@@ -105,8 +105,8 @@ double Stack_Double_pop(double *stack, size_t *top)
  * @param top Stack top pointer
  * @return true if empty
  */
-bool Stack_isEmpty(size_t top) {
-    return top <= STACK_INIT_TOP;
+bool Stack_isEmpty(size_t *top) {
+    return *top <= STACK_INIT_TOP;
 }
 
 /**
@@ -115,6 +115,6 @@ bool Stack_isEmpty(size_t top) {
  * @param top Stack top pointer
  * @return true if full
  */
-bool Stack_isFull(size_t top) {
-    return top >= STACK_LEN - 1;
+bool Stack_isFull(size_t *top) {
+    return *top >= STACK_LEN - 1;
 }
