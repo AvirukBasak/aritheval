@@ -6,7 +6,7 @@
  * @param rear  Queue rear pointer
  * @param ch    Character to push
  */
-void Queue_Byte_push(byte *queue, size_t *front, size_t *rear, byte ch)
+void Queue_Byte_push(byte *queue, int *front, int *rear, byte ch)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -28,7 +28,7 @@ void Queue_Byte_push(byte *queue, size_t *front, size_t *rear, byte ch)
  * @param front Queue front pointer
  * @return byte
  */
-byte Queue_Byte_peek(byte *queue, size_t *front)
+byte Queue_Byte_peek(byte *queue, int *front)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -46,7 +46,7 @@ byte Queue_Byte_peek(byte *queue, size_t *front)
  * @param rear  Queue rear pointer
  * @return byte
  */
-byte Queue_Byte_pop(byte *queue, size_t *front, size_t *rear)
+byte Queue_Byte_pop(byte *queue, int *front, int *rear)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -70,7 +70,7 @@ byte Queue_Byte_pop(byte *queue, size_t *front, size_t *rear)
  * @param rear  Queue rear pointer
  * @param val   Value to push
  */
-void Queue_Double_push(double *queue, size_t *front, size_t *rear, double val)
+void Queue_Double_push(double *queue, int *front, int *rear, double val)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -92,7 +92,7 @@ void Queue_Double_push(double *queue, size_t *front, size_t *rear, double val)
  * @param front Queue front pointer
  * @return double
  */
-double Queue_Double_peek(double *queue, size_t *front)
+double Queue_Double_peek(double *queue, int *front)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -110,7 +110,7 @@ double Queue_Double_peek(double *queue, size_t *front)
  * @param rear  Queue rear pointer
  * @return double
  */
-double Queue_Double_pop(double *queue, size_t *front, size_t *rear)
+double Queue_Double_pop(double *queue, int *front, int *rear)
 {
     if (*front == QUEUE_INIT_FRONT)
     {
@@ -133,7 +133,7 @@ double Queue_Double_pop(double *queue, size_t *front, size_t *rear)
  * @param rear  Queue rear pointer
  * @return true if empty
  */
-bool Queue_isEmpty(size_t *front, size_t *rear) {
+bool Queue_isEmpty(int *front, int *rear) {
     return *front == QUEUE_INIT_FRONT;
 }
 
@@ -144,6 +144,6 @@ bool Queue_isEmpty(size_t *front, size_t *rear) {
  * @param rear  Queue rear pointer
  * @return true if full
  */
-bool Queue_isFull(size_t *front, size_t *rear) {
+bool Queue_isFull(int *front, int *rear) {
     return *rear == QUEUE_LEN;
 }

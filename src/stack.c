@@ -5,7 +5,7 @@
  * @param top   Stack top pointer
  * @param ch    Character to push
  */
-void Stack_Byte_push(byte *stack, size_t *top, byte ch)
+void Stack_Byte_push(byte *stack, int *top, byte ch)
 {
     if (*top == STACK_LEN - 1)
     {
@@ -22,7 +22,7 @@ void Stack_Byte_push(byte *stack, size_t *top, byte ch)
  * @param top   Stack top pointer
  * @return byte
  */
-byte Stack_Byte_peek(byte *stack, size_t *top)
+byte Stack_Byte_peek(byte *stack, int *top)
 {
     if (*top == STACK_INIT_TOP)
     {
@@ -39,7 +39,7 @@ byte Stack_Byte_peek(byte *stack, size_t *top)
  * @param top   Stack top pointer
  * @return byte
  */
-byte Stack_Byte_pop(byte *stack, size_t *top)
+byte Stack_Byte_pop(byte *stack, int *top)
 {
     if (*top == STACK_INIT_TOP)
     {
@@ -56,7 +56,7 @@ byte Stack_Byte_pop(byte *stack, size_t *top)
  * @param top   Stack top pointer
  * @param val   Value to push
  */
-void Stack_Double_push(double *stack, size_t *top, double val)
+void Stack_Double_push(double *stack, int *top, double val)
 {
     if (*top == STACK_LEN - 1)
     {
@@ -72,7 +72,7 @@ void Stack_Double_push(double *stack, size_t *top, double val)
  * @param stack Double stack pointer
  * @param top   Stack top pointer
  */
-double Stack_Double_peek(double *stack, size_t *top)
+double Stack_Double_peek(double *stack, int *top)
 {
     if (*top == STACK_INIT_TOP)
     {
@@ -89,7 +89,7 @@ double Stack_Double_peek(double *stack, size_t *top)
  * @param top   Stack top pointer
  * @return double
  */
-double Stack_Double_pop(double *stack, size_t *top)
+double Stack_Double_pop(double *stack, int *top)
 {
     if (*top == STACK_INIT_TOP)
     {
@@ -105,7 +105,7 @@ double Stack_Double_pop(double *stack, size_t *top)
  * @param top Stack top pointer
  * @return true if empty
  */
-bool Stack_isEmpty(size_t *top) {
+bool Stack_isEmpty(int *top) {
     return *top <= STACK_INIT_TOP;
 }
 
@@ -115,6 +115,6 @@ bool Stack_isEmpty(size_t *top) {
  * @param top Stack top pointer
  * @return true if full
  */
-bool Stack_isFull(size_t *top) {
+bool Stack_isFull(int *top) {
     return *top >= STACK_LEN - 1;
 }

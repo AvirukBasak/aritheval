@@ -120,7 +120,7 @@ void tokenize()
         // if token count exceeded limit
         if (TOKENS > MAX_TOKENS)
         {
-            printf("aritheval: exceeded maximum token count: %ld tokens found\n", TOKENS);
+            printf("aritheval: exceeded maximum token count: %d tokens found\n", TOKENS);
             exit(EEXTKCOUNT);
         }
 

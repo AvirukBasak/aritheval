@@ -44,8 +44,8 @@ int main(const int argc, const char *const argv[])
         return EENDCHAR;
     }
     tokenize();
-    printf("\n");
-    printf("Result = %lf\n", eval());
-    printf("\n");
+    if (DEBUG) printf("\nResult = ");
+    printf("%lf\n", eval());
+    if (DEBUG) printf("\n");
     return 0;
 }
