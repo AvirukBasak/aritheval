@@ -10,3 +10,6 @@ char STR_TOKENS[MAX_TOKENS][TOKEN_LEN] = { { CH_NULL } };
 
 byte OP_QUEUE[QUEUE_LEN] = { CH_NULL };
 double NUM_QUEUE[QUEUE_LEN] = { 0.0 };
+
+byte OP_STACK[STACK_LEN] = { CH_NULL };
+double NUM_STACK[STACK_LEN] = { 0.0 };

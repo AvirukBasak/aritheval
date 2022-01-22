@@ -44,10 +44,8 @@ int main(const int argc, const char *const argv[])
         return EENDCHAR;
     }
     tokenize();
-    for (size_t i = 0; i <= TOKENS; i++)
-    {
-        printf("TOK: %s\n", STR_TOKENS[i]);
-    }
-    printf("Result = %s\n", EXPRESSION);
+    printf("\n");
+    printf("Result = %lf\n", eval());
+    printf("\n");
     return 0;
 }
