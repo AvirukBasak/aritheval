@@ -1,107 +1,97 @@
 /**
- * @brief Returns type of next token and sets STR_TOKEN to that token.
+ * @brief Returns type of next token and sets strtoken to that token.
  *
  * @param posn Posn From where to look for tokens, gets updated.
+ * @param strtoken Pointer to variable that is set to the next token.
  * @return byte -- Type of token
  */
-byte nextToken(size_t *posn)
+byte nextToken (size_t *posn, char *strtoken)
 {
     byte token_type = INVAL_TOKEN;
-    size_t len = strlen(EXPRESSION);
+    size_t len = strlen (g_expression);
 
     // get character
-    char c = EXPRESSION[*posn];
+    char c = g_expression[*posn];
 
-    if (!isdigit(c) && c != '.')
-    {
+    if (!isdigit (c) && c != '.') {
+
         // if character is present in VALID_CHARS, ptr is non-NULL
-        char *ptr = strchr(VALID_CHARS, c);
+        char *ptr = strchr (VALID_CHARS, c);
 
-        /* if ptr is non-NULL, increment *posn copy character to STR_TOKEN,
-         * end STR_TOKEN, and set token_type.
+        /* if ptr is non-NULL, increment *posn copy character to strtoken,
+         * end strtoken, and set token_type.
          */
-        if (ptr)
-        {
+        if (ptr) {
             (*posn)++;
-            STR_TOKEN[0] = *ptr;
-            STR_TOKEN[1] = 0;
+            strtoken[0] = *ptr;
+            strtoken[1] = 0;
             token_type = CHAR_TOKEN;
-        }
-        else
-        {
-            printf("aritheval: invalid character at posn: %ld\n", *posn);
-            exit(EINVCHAR);
+        } else {
+            printf ("aritheval: invalid character at posn: %ld\n", *posn);
+            exit (E_INVCHAR);
         }
 
         bool is_op_bracket = false;
         bool is_cl_bracket = false;
-        if (c == '(')
+        if (c == '(') {
             is_op_bracket = true;
-        if (c == ')')
+        }
+        if (c == ')') {
             is_cl_bracket = true;
+        }
 
         // checks next index for valid characters
-        c = EXPRESSION[*posn];
-        ptr = strchr(VALID_CHARS, c);
-        if (!ptr)
-        {
-            printf("aritheval: invalid character at posn: %ld\n", *posn);
-            exit(EINVCHAR);
-        }
-        else if (is_cl_bracket) {}
-        else if (!isdigit(EXPRESSION[*posn]) && EXPRESSION[*posn] != '.' && EXPRESSION[*posn] != '('
-             &&  EXPRESSION[*posn] != '+'    && EXPRESSION[*posn] != '-')
-        {
-            printf("aritheval: unsupported operation at posn: %ld\n", *posn);
-            exit(EUNSUPOP);
+        c = g_expression[*posn];
+        ptr = strchr (VALID_CHARS, c);
+        if (!ptr) {
+            printf ("aritheval: invalid character at posn: %ld\n", *posn);
+            exit (E_INVCHAR);
+        } else if (is_cl_bracket) {
+        } else if (!isdigit (g_expression[*posn]) && g_expression[*posn] != '.' && g_expression[*posn] != '('
+                                                  && g_expression[*posn] != '+' && g_expression[*posn] != '-') {
+            printf ("aritheval: unsupported operation at posn: %ld\n", *posn);
+            exit (E_UNSUPOP);
         }
     }
-    else
-    {
-        /* strncat() concatenates from null character of string.
-         * since we wish to overwrite the STR_TOKEN with new token, we set this
-         */
-        STR_TOKEN[0] = 0;
+    else {
+
+        strtoken[0] = 0;
 
         // tracks if more than 1 dot was found
         bool dot_found = false;
 
         // while *posn < len, Loop through the EXPRESSION
-        for (size_t i = 0; ; i++, (*posn)++)
-        {
+        for (size_t i = 0; ; i++, (*posn)++) {
             // if token length exceeded limit
-            if (i > TOKEN_LEN)
-            {
-                printf("aritheval: exceeded maximum token length of %d bytes\n", TOKEN_LEN);
-                exit(EEXMXTLEN);
+            if (i > MAX_TOKEN_LEN) {
+                printf ("aritheval: exceeded maximum token length of %d bytes\n", MAX_TOKEN_LEN);
+                exit (E_EXMXTLEN);
             }
-            char c = EXPRESSION[*posn];
+ 
+            char c = g_expression[*posn];
 
-            // if c is a digit, concatenate it to STR_TOKEN
-            if (c == '.')
-            {
-                strncat(STR_TOKEN, &c, 1);
-                if (dot_found)
-                {
-                    printf("aritheval: excess dot found at posn: %ld\n", *posn);
-                    exit(EEXDOT);
-                }
-                else
+            // if c is a digit, concatenate it to strtoken
+            if (c == '.') {
+                /* strncat () concatenates from null character of string.
+                 * since we wish to overwrite the strtoken with new token, we set this
+                 */
+                strncat (strtoken, &c, 1);
+                if (dot_found) {
+                    printf ("aritheval: excess dot found at posn: %ld\n", *posn);
+                    exit (E_EXDOT);
+                } else {
                     dot_found = true;
-            }
-            else if (isdigit(c))
-                strncat(STR_TOKEN, &c, 1);
-            else
-            {
-                if (STR_TOKEN[i - 1] == '.')
-                {
-                    printf("aritheval: number can't end with a dot: %ld\n", *posn);
-                    exit(ENOENDDOT);
                 }
-
-                // set token_type, end STR_TOKEN with null and break loop
+            } else if (isdigit (c)) {
+                strncat (strtoken, &c, 1);
+            } else {
+                if (strtoken[i - 1] == '.') {                    
+                    printf ("aritheval: number can't end with a dot: %ld\n", *posn);
+                    exit (E_NOENDDOT);
+                }
+                // set token_type, end strtoken with null and break loop
                 token_type = INT_TOKEN;
-                STR_TOKEN[i] = 0;
+                strtoken[i] = 0;
                 break;
             }
         }
@@ -112,35 +102,36 @@ byte nextToken(size_t *posn)
 /**
  * @brief Tokenize expression
  */
-void tokenize()
+void tokenize ()
 {
     // Loop through the entire input
-    for (size_t i = 0; i < strlen(EXPRESSION); TOKENS++)
-    {
+    for (size_t i = 0; i < strlen (g_expression); g_tokens++) {
+
+        // stores the next token
+        char strtoken[MAX_TOKEN_LEN] = { CH_NULL };
+
         // if token count exceeded limit
-        if (TOKENS > MAX_TOKENS)
-        {
-            printf("aritheval: exceeded maximum token count: %d tokens found\n", TOKENS);
-            exit(EEXTKCOUNT);
+        if (g_tokens > MAX_TOKENS) {
+            printf ("aritheval: exceeded maximum token count: %d tokens found\n", g_tokens);
+            exit (E_EXTKCOUNT);
         }
 
         size_t posn = i;
-        byte token_type = nextToken(&posn);
-        switch (token_type)
-        {
+        byte token_type = nextToken (&posn, strtoken);
+        switch (token_type) {
             case INT_TOKEN:
-                strncpy(STR_TOKENS[TOKENS], STR_TOKEN, strlen(STR_TOKEN));
+                strncpy (g_tokenizedexp[g_tokens], strtoken, strlen (strtoken));
                 break;
             case CHAR_TOKEN:
-                strncpy(STR_TOKENS[TOKENS], STR_TOKEN, strlen(STR_TOKEN));
+                strncpy (g_tokenizedexp[g_tokens], strtoken, strlen (strtoken));
                 break;
             default:
-                printf("aritheval: logical error, report output to developer\n"
-                       "token_type = %d\n"
-                       "STR_TOKEN  = %s\n", token_type, STR_TOKEN);
-                exit(ELOGICAL);
+                printf ("aritheval: logical error, report output to developer\n"
+                        "token_type = %d\n"
+                        "strtoken  = %s\n", token_type, strtoken);
+                exit (E_LOGICAL);
         }
         i = posn;
     }
-    TOKENS--;
+    g_tokens--;
 }

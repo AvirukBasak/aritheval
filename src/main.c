@@ -7,45 +7,40 @@
 # include "tokenizer.c"
 # include "eval.c"
 
-int main(const int argc, const char *const argv[])
+int main (const int argc, const char *const argv[])
 {
-    if (argc < 2)
-    {
-        printf("aritheval: no expression provided\n"
-               "USAGE: aritheval \"[expression]\"\n");
-        return ENOEXPR;
+    if (argc < 2) {
+        printf ("aritheval: no expression provided\n"
+                "USAGE: aritheval \"[expression]\"\n");
+        return E_NOEXPR;
+    } else if (argc > 2) {
+        printf ("aritheval: too many arguments provided\n"
+                "USAGE: aritheval \"[expression]\"\n");
+        return E_EXCARGS;
+    } else if (strlen (argv[1]) > MAX_STRCPLEN) {
+        printf ("aritheval: input exceeded limit of %d bytes\n", MAX_STRLEN);
+        return E_EXBLIM;
+    } else if (argv[1][0] == 0) {
+        printf ("aritheval: expression can't be empty\n");
+        return E_EMPEXP;
     }
-    else if (argc > 2)
-    {
-        printf("aritheval: too many arguments provided\n"
-               "USAGE: aritheval \"[expression]\"\n");
-        return EEXCARGS;
+    strncpy (g_expression, argv[1], MAX_STRCPLEN);
+    size_t len = strlen (g_expression);
+    if (strchr (" )^/*", g_expression[0])) {
+        printf ("aritheval: expression can't start with '%c'\n", g_expression[0]);
+        return E_STRTCHAR;
     }
-    else if (strlen(argv[1]) > STRCPLEN)
-    {
-        printf("aritheval: input exceeded limit of %d bytes\n", STRLEN);
-        return EEXBLIM;
+    if (strchr (" . (^/*+-", g_expression[len - 1])) {
+        printf ("aritheval: expression can't end with '%c'\n", g_expression[len - 1]);
+        return E_ENDCHAR;
     }
-    else if (argv[1][0] == 0)
-    {
-        printf("aritheval: expression can't be empty\n");
-        return EEMPEXP;
+    tokenize ();
+    if (g_debug) {
+        printf ("\nResult = ");
     }
-    strncpy(EXPRESSION, argv[1], STRCPLEN);
-    size_t len = strlen(EXPRESSION);
-    if (strchr(" )^/*", EXPRESSION[0]))
-    {
-        printf("aritheval: expression can't start with '%c'\n", EXPRESSION[0]);
-        return ESTRTCHAR;
+    printf ("%lf\n", eval ());
+    if (g_debug) {
+        printf ("\n");
     }
-    if (strchr(" .(^/*+-", EXPRESSION[len - 1]))
-    {
-        printf("aritheval: expression can't end with '%c'\n", EXPRESSION[len - 1]);
-        return EENDCHAR;
-    }
-    tokenize();
-    if (DEBUG) printf("\nResult = ");
-    printf("%lf\n", eval());
-    if (DEBUG) printf("\n");
     return 0;
 }

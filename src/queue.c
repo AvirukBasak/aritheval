@@ -6,17 +6,15 @@
  * @param rear  Queue rear pointer
  * @param ch    Character to push
  */
-void Queue_Byte_push(byte *queue, int *front, int *rear, byte ch)
+void byte_queue_push (byte *queue, int *front, int *rear, byte ch)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
+    if (*front == QUEUE_INIT_FRONT) {
         *front = 0;
         *rear = 0;
     }
-    if (*rear == QUEUE_LEN)
-    {
-        printf("aritheval: byte queue overflow\n");
-        exit(EBQOVFLOW);
+    if (*rear == MAX_QUEUE_LEN) {
+        printf ("aritheval: byte queue overflow\n");
+        exit (E_BQOVFLOW);
     }
     queue[(*rear)++] = ch;
 }
@@ -28,12 +26,11 @@ void Queue_Byte_push(byte *queue, int *front, int *rear, byte ch)
  * @param front Queue front pointer
  * @return byte
  */
-byte Queue_Byte_peek(byte *queue, int *front)
+byte byte_queue_peek (byte *queue, int *front)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
-        printf("aritheval: byte queue underflow\n");
-        exit(EBQPEKUND);
+    if (*front == QUEUE_INIT_FRONT) {
+        printf ("aritheval: byte queue underflow\n");
+        exit (E_BQPEKUND);
     }
     return queue[*front];
 }
@@ -46,16 +43,14 @@ byte Queue_Byte_peek(byte *queue, int *front)
  * @param rear  Queue rear pointer
  * @return byte
  */
-byte Queue_Byte_pop(byte *queue, int *front, int *rear)
+byte byte_queue_pop (byte *queue, int *front, int *rear)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
-        printf("aritheval: byte queue underflow\n");
-        exit(EBQPOPUND);
+    if (*front == QUEUE_INIT_FRONT) {
+        printf ("aritheval: byte queue underflow\n");
+        exit (E_BQPOPUND);
     }
     byte value = queue[(*front)++];
-    if (*rear == *front)
-    {
+    if (*rear == *front) {
         *front = QUEUE_INIT_FRONT;
         *rear = QUEUE_INIT_REAR;
     }
@@ -70,17 +65,15 @@ byte Queue_Byte_pop(byte *queue, int *front, int *rear)
  * @param rear  Queue rear pointer
  * @param val   Value to push
  */
-void Queue_Double_push(double *queue, int *front, int *rear, double val)
+void double_queue_push (double *queue, int *front, int *rear, double val)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
+    if (*front == QUEUE_INIT_FRONT) {
         *front = 0;
         *rear = 0;
     }
-    if (*rear == QUEUE_LEN)
-    {
-        printf("aritheval: double queue overflow\n");
-        exit(EDQOVFLOW);
+    if (*rear == MAX_QUEUE_LEN) {
+        printf ("aritheval: double queue overflow\n");
+        exit (E_DQOVFLOW);
     }
     queue[(*rear)++] = val;
 }
@@ -92,12 +85,11 @@ void Queue_Double_push(double *queue, int *front, int *rear, double val)
  * @param front Queue front pointer
  * @return double
  */
-double Queue_Double_peek(double *queue, int *front)
+double double_queue_peek (double *queue, int *front)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
-        printf("aritheval: double queue underflow\n");
-        exit(EDQPEKUND);
+    if (*front == QUEUE_INIT_FRONT) {
+        printf ("aritheval: double queue underflow\n");
+        exit (E_DQPEKUND);
     }
     return queue[*front];
 }
@@ -110,16 +102,14 @@ double Queue_Double_peek(double *queue, int *front)
  * @param rear  Queue rear pointer
  * @return double
  */
-double Queue_Double_pop(double *queue, int *front, int *rear)
+double double_queue_pop (double *queue, int *front, int *rear)
 {
-    if (*front == QUEUE_INIT_FRONT)
-    {
-        printf("aritheval: double queue underflow\n");
-        exit(EDQPOPUND);
+    if (*front == QUEUE_INIT_FRONT) {
+        printf ("aritheval: double queue underflow\n");
+        exit (E_DQPOPUND);
     }
     double value = queue[(*front)++];
-    if (*rear == *front)
-    {
+    if (*rear == *front) {
         *front = QUEUE_INIT_FRONT;
         *rear = QUEUE_INIT_REAR;
     }
@@ -133,7 +123,8 @@ double Queue_Double_pop(double *queue, int *front, int *rear)
  * @param rear  Queue rear pointer
  * @return true if empty
  */
-bool Queue_isEmpty(int *front, int *rear) {
+bool queue_isempty (int *front, int *rear)
+{
     return *front == QUEUE_INIT_FRONT;
 }
 
@@ -144,6 +135,7 @@ bool Queue_isEmpty(int *front, int *rear) {
  * @param rear  Queue rear pointer
  * @return true if full
  */
-bool Queue_isFull(int *front, int *rear) {
-    return *rear == QUEUE_LEN;
+bool queue_isfull (int *front, int *rear)
+{
+    return *rear == MAX_QUEUE_LEN;
 }

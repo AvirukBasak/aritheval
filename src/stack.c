@@ -5,12 +5,11 @@
  * @param top   Stack top pointer
  * @param ch    Character to push
  */
-void Stack_Byte_push(byte *stack, int *top, byte ch)
+void byte_stack_push (byte *stack, int *top, byte ch)
 {
-    if (*top == STACK_LEN - 1)
-    {
-        printf("aritheval: byte stack overflow\n");
-        exit(EBSOVFLOW);
+    if (*top == MAX_STACK_LEN - 1) {
+        printf ("aritheval: byte stack overflow\n");
+        exit (E_BSOVFLOW);
     }
     stack[++(*top)] = ch;
 }
@@ -22,12 +21,11 @@ void Stack_Byte_push(byte *stack, int *top, byte ch)
  * @param top   Stack top pointer
  * @return byte
  */
-byte Stack_Byte_peek(byte *stack, int *top)
+byte byte_stack_peek (byte *stack, int *top)
 {
-    if (*top == STACK_INIT_TOP)
-    {
-        printf("aritheval: byte stack underflow\n");
-        exit(EBSPEKUND);
+    if (*top == STACK_INIT_TOP) {
+        printf ("aritheval: byte stack underflow\n");
+        exit (E_BSPEKUND);
     }
     return stack[*top];
 }
@@ -39,12 +37,11 @@ byte Stack_Byte_peek(byte *stack, int *top)
  * @param top   Stack top pointer
  * @return byte
  */
-byte Stack_Byte_pop(byte *stack, int *top)
+byte byte_stack_pop (byte *stack, int *top)
 {
-    if (*top == STACK_INIT_TOP)
-    {
-        printf("aritheval: byte stack underflow\n");
-        exit(EBSPOPUND);
+    if (*top == STACK_INIT_TOP) {
+        printf ("aritheval: byte stack underflow\n");
+        exit (E_BSPOPUND);
     }
     return stack[(*top)--];
 }
@@ -56,12 +53,11 @@ byte Stack_Byte_pop(byte *stack, int *top)
  * @param top   Stack top pointer
  * @param val   Value to push
  */
-void Stack_Double_push(double *stack, int *top, double val)
+void double_stack_push (double *stack, int *top, double val)
 {
-    if (*top == STACK_LEN - 1)
-    {
-        printf("aritheval: double stack overflow\n");
-        exit(EBSOVFLOW);
+    if (*top == MAX_STACK_LEN - 1) {
+        printf ("aritheval: double stack overflow\n");
+        exit (E_BSOVFLOW);
     }
     stack[++(*top)] = val;
 }
@@ -72,12 +68,11 @@ void Stack_Double_push(double *stack, int *top, double val)
  * @param stack Double stack pointer
  * @param top   Stack top pointer
  */
-double Stack_Double_peek(double *stack, int *top)
+double double_stack_peek (double *stack, int *top)
 {
-    if (*top == STACK_INIT_TOP)
-    {
-        printf("aritheval: double stack underflow\n");
-        exit(EDSPEKUND);
+    if (*top == STACK_INIT_TOP) {
+        printf ("aritheval: double stack underflow\n");
+        exit (E_DSPEKUND);
     }
     return stack[*top];
 }
@@ -89,12 +84,11 @@ double Stack_Double_peek(double *stack, int *top)
  * @param top   Stack top pointer
  * @return double
  */
-double Stack_Double_pop(double *stack, int *top)
+double double_stack_pop (double *stack, int *top)
 {
-    if (*top == STACK_INIT_TOP)
-    {
-        printf("aritheval: double stack underflow\n");
-        exit(EDSPOPUND);
+    if (*top == STACK_INIT_TOP) {
+        printf ("aritheval: double stack underflow\n");
+        exit (E_DSPOPUND);
     }
     return stack[(*top)--];
 }
@@ -105,7 +99,8 @@ double Stack_Double_pop(double *stack, int *top)
  * @param top Stack top pointer
  * @return true if empty
  */
-bool Stack_isEmpty(int *top) {
+bool stack_isempty (int *top)
+{
     return *top <= STACK_INIT_TOP;
 }
 
@@ -115,6 +110,7 @@ bool Stack_isEmpty(int *top) {
  * @param top Stack top pointer
  * @return true if full
  */
-bool Stack_isFull(int *top) {
-    return *top >= STACK_LEN - 1;
+bool stack_isfull (int *top)
+{
+    return *top >= MAX_STACK_LEN - 1;
 }
