@@ -8,6 +8,8 @@
 double raiseToPower (long oprnd1, long oprnd2)
 {
     bool negative_power = oprnd2 < 0;
+    oprnd2 = llabs (oprnd2);
+    double result = oprnd1;
 
     if (oprnd2 == 0) {
         return 1;
@@ -15,15 +17,14 @@ double raiseToPower (long oprnd1, long oprnd2)
         return oprnd2;
     }
 
-    oprnd2 = llabs (oprnd2);
     while (oprnd2 > 1) {
-        oprnd1 *= oprnd1;
+        result *= oprnd1;
         oprnd2--;
     }
     if (negative_power) {
-        oprnd1 = 1 / oprnd1;
+        result = 1 / result;
     }
-    return oprnd1;
+    return result;
 }
 
 /**
