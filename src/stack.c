@@ -5,7 +5,7 @@
  * @param top   Stack top pointer
  * @param ch    Character to push
  */
-void byte_stack_push (byte *stack, int *top, byte ch)
+void byte_stack_push (byte stack[MAX_STACK_LEN], int *top, byte ch)
 {
     if (*top == MAX_STACK_LEN - 1) {
         printf ("aritheval: byte stack overflow\n");
@@ -21,7 +21,7 @@ void byte_stack_push (byte *stack, int *top, byte ch)
  * @param top   Stack top pointer
  * @return byte
  */
-byte byte_stack_peek (byte *stack, int *top)
+byte byte_stack_peek (byte stack[MAX_STACK_LEN], int *top)
 {
     if (*top == STACK_INIT_TOP) {
         printf ("aritheval: byte stack underflow\n");
@@ -37,7 +37,7 @@ byte byte_stack_peek (byte *stack, int *top)
  * @param top   Stack top pointer
  * @return byte
  */
-byte byte_stack_pop (byte *stack, int *top)
+byte byte_stack_pop (byte stack[MAX_STACK_LEN], int *top)
 {
     if (*top == STACK_INIT_TOP) {
         printf ("aritheval: byte stack underflow\n");
@@ -53,7 +53,7 @@ byte byte_stack_pop (byte *stack, int *top)
  * @param top   Stack top pointer
  * @param val   Value to push
  */
-void double_stack_push (double *stack, int *top, double val)
+void double_stack_push (double stack[MAX_STACK_LEN], int *top, double val)
 {
     if (*top == MAX_STACK_LEN - 1) {
         printf ("aritheval: double stack overflow\n");
@@ -68,7 +68,7 @@ void double_stack_push (double *stack, int *top, double val)
  * @param stack Double stack pointer
  * @param top   Stack top pointer
  */
-double double_stack_peek (double *stack, int *top)
+double double_stack_peek (double stack[MAX_STACK_LEN], int *top)
 {
     if (*top == STACK_INIT_TOP) {
         printf ("aritheval: double stack underflow\n");
@@ -84,7 +84,7 @@ double double_stack_peek (double *stack, int *top)
  * @param top   Stack top pointer
  * @return double
  */
-double double_stack_pop (double *stack, int *top)
+double double_stack_pop (double stack[MAX_STACK_LEN], int *top)
 {
     if (*top == STACK_INIT_TOP) {
         printf ("aritheval: double stack underflow\n");

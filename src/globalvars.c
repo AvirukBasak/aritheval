@@ -7,9 +7,9 @@ bool   g_debug = false;
 char   g_expression    [MAX_STRLEN] = { CH_NULL };
 
 int    g_tokens = 0;
-char   g_tokenizedexp  [MAX_TOKENS][MAX_TOKEN_LEN] = { { CH_NULL } };
+char   g_tokenizedexp  [MAX_TOKENS][MAX_TOKEN_LEN]    = { { CH_NULL } };
 
-byte   g_opqueue       [MAX_QUEUE_LEN] = { CH_NULL };
-double g_numqueue      [MAX_QUEUE_LEN] = { 0.0 };
-byte   g_opstack       [MAX_QUEUE_LEN] = { CH_NULL };
-double g_numstack      [MAX_QUEUE_LEN] = { 0.0 };
+// postfix stack
+char   g_postfixqueue  [MAX_QUEUE_LEN][MAX_TOKEN_LEN] = { { CH_NULL } };
+int    g_postfixqueue_front = QUEUE_INIT_FRONT;
+int    g_postfixqueue_rear = QUEUE_INIT_REAR;

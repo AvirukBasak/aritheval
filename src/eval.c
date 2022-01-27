@@ -104,16 +104,69 @@ bool hasMorePriority (char op1, char op2)
 /**
  * @brief Converts expression to postfix.
  */
-double postfix ()
+void postfix ()
 {
-    return 0.0;
+    // operator stack
+    int opstack_top = STACK_INIT_TOP;
+    byte opstack [MAX_QUEUE_LEN] = { CH_NULL };
+
+    for (int i = 0; i <= g_tokens; i++) {
+        const char *token = g_tokenizedexp[i];
+        if (isOperator (token)) {
+            const char oprtr = token[0];
+            if (stack_isempty (&opstack_top)) {
+                byte_stack_push (opstack, &opstack_top, oprtr);
+            } else {
+                const char prev_oprtr = byte_stack_peek (opstack, &opstack_top);
+                if (!hasMorePriority (oprtr, prev_oprtr)) {
+                    byte_stack_push (opstack, &opstack_top, oprtr);
+                } else {
+                    const char prev_oprtr = byte_stack_pop (opstack, &opstack_top);
+                    char token[MAX_TOKEN_LEN] = { CH_NULL };
+                    token[0] = prev_oprtr;
+                    string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+                    byte_stack_push (opstack, &opstack_top, oprtr);
+                }
+            }
+        } else if (isNumeric (token)) {
+            string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+        } else {
+            /** @todo resolve identifiers */
+        }
+    }
+    // pop out remaining operators and push to queue
+    while (!stack_isempty (&opstack_top)) {
+        char token[MAX_TOKEN_LEN] = { CH_NULL };
+        token[0] = byte_stack_pop (opstack, &opstack_top);
+        string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+    }
 }
 
-
 /**
- * @brief Evaluates an expression based on a specific operator.
+ * @brief Evaluates a postfix expression.
+ *
+ * @return double -- The result
  */
 double eval ()
 {
-    return 0.0;
+    // numeric stack
+    int numstack_top = STACK_INIT_TOP;
+    double numstack [MAX_QUEUE_LEN] = { 0.0 };
+
+    while (!queue_isempty (&g_postfixqueue_front, &g_postfixqueue_rear)) {
+        const char *token = string_queue_pop (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear);
+        if (isOperator (token)) {
+            const char oprtr = token[0];
+            const double oprnd2 = double_stack_pop (numstack, &numstack_top);
+            const double oprnd1 = double_stack_pop (numstack, &numstack_top);
+            const double result = operate (oprtr, oprnd1, oprnd2);
+            double_stack_push (numstack, &numstack_top, result);
+        } else if (isNumeric (token)) {
+            const double number = atof (token);
+            double_stack_push (numstack, &numstack_top, number);
+        } else {
+            /** @todo resolve identifiers */
+        }
+    }
+    return double_stack_pop (numstack, &numstack_top);
 }

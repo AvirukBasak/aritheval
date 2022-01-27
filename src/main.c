@@ -34,11 +34,13 @@ int main (const int argc, const char *const argv[])
         printf ("aritheval: expression can't end with '%c'\n", g_expression[len - 1]);
         return E_ENDCHAR;
     }
-    tokenize ();
+    tokenize ();                     // stores tokens in g_tokenizedexp
+    postfix ();                      // stores tokens in g_postfixedexp
+    const double result = eval();    // evaluates g_postfixedexp
     if (g_debug) {
         printf ("\nResult = ");
     }
-    printf ("%lf\n", eval ());
+    printf ("%lf\n", result);
     if (g_debug) {
         printf ("\n");
     }
