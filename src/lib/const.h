@@ -2,8 +2,8 @@
 
     # define CONST_H
 
-    static const char STR_NULL[MAX_STRLEN];
-    static const char *OPERATORS;
-    static const char *VALID_CHARS;
+    extern const char STR_NULL[MAX_STRLEN];
+    extern const char *OPERATORS;
+    extern const char *VALID_CHARS;
 
 # endif
