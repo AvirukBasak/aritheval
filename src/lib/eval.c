@@ -79,6 +79,36 @@ double eval_operate (char op, double num1, double num2)
 }
 
 /**
+ * @brief Checks if token is a bracket
+ *
+ * @param char* The category of brace ("opening" or "closing")
+ * @param char* The string to check
+ * @return true If str is a brace and the matches category
+ */
+bool eval_isBrace (const char *category, const char *str)
+{
+    if (!strcmp (category, "opening")) {
+        return strlen (str) == 1 && str[0] == '(';
+    } else if (!strcmp (category, "closing")) {
+        return strlen (str) == 1 && str[0] == ')';
+    } else {
+        printf ("aritheval: invalid category of brace: %s\n", category);
+        exit (E_LOGICAL);
+    }
+}
+
+/**
+ * @brief Checks if passed string is an operator.
+ *
+ * @param str String to check
+ * @return bool
+ */
+bool eval_isOperator (const char *str)
+{
+    return strlen (str) == 1 && strchr (OPERATORS, str[0]);
+}
+
+/**
  * @brief Checks if passed string is a number through and through.
  *
  * @param str String to check
@@ -97,17 +127,6 @@ bool eval_isNumeric (const char *str)
 }
 
 /**
- * @brief Checks if passed string is an operator.
- *
- * @param str String to check
- * @return bool
- */
-bool eval_isOperator (const char *str)
-{
-    return strlen (str) == 1 && strchr (OPERATORS, str[0]);
-}
-
-/**
  * @brief Compares passed operators for protity
  *
  * @param op1
@@ -116,6 +135,7 @@ bool eval_isOperator (const char *str)
  */
 bool eval_hasMorePriority (char op1, char op2)
 {
+    if (op1 == '(') return true;
     int indexOp1 = (int) (strchr (OPERATORS, op1) - OPERATORS);
     int indexOp2 = (int) (strchr (OPERATORS, op2) - OPERATORS);
     return indexOp1 > indexOp2;
@@ -134,7 +154,7 @@ void eval_postfix ()
         const char *token = eval_tokenizedexp[i];
         if (eval_isOperator (token)) {
             const char oprtr = token[0];
-            if (stack_isempty (&opstack_top)) {
+            if (stack_isempty (&opstack_top) || byte_stack_peek (opstack, &opstack_top) == '(') {
                 byte_stack_push (opstack, &opstack_top, oprtr);
             } else {
                 const char prev_oprtr = byte_stack_peek (opstack, &opstack_top);
@@ -150,6 +170,22 @@ void eval_postfix ()
             }
         } else if (eval_isNumeric (token)) {
             string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
+        } else if (eval_isBrace ("opening", token)) {
+            const char oprtr = token[0];
+            byte_stack_push (opstack, &opstack_top, oprtr);
+        } else if (eval_isBrace ("closing", token)) {
+            char peek_oprtr = byte_stack_peek (opstack, &opstack_top);
+            while (peek_oprtr != '(' && !stack_isempty (&opstack_top)) {
+                char token[MAX_TOKEN_LEN] = { CH_NULL };
+                token[0] = byte_stack_pop (opstack, &opstack_top);;
+                string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
+                peek_oprtr = byte_stack_peek (opstack, &opstack_top);
+            }
+            if (peek_oprtr != '(' || stack_isempty (&opstack_top)) {
+                printf ("aritheval: couldn't find closing parentheses, posn: %ld\n", i);
+                exit (E_MISSPAREN);
+            }
+            byte_stack_pop (opstack, &opstack_top);
         } else {
             /** @todo resolve identifiers */
             printf ("aritheval: unrecognised token: %s\n", token);

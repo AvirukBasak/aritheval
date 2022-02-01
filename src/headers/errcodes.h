@@ -1,5 +1,7 @@
 # ifndef ERRCODES_H
+
     # define ERRCODES_H
+
     # define E_NOEXPR      1    // no expression provided
     # define E_EXCARGS     2    // too many arguments provided
     # define E_EXBLIM      3    // input exceeded limit of %d bytes
@@ -28,4 +30,6 @@
     # define E_DSPOPUND   26    // double stack underflow (pop)
     # define E_UNRETOK    27    // unrecognised token: %s
     # define E_MULOPINST  28    // multiple instances of operator '%c' found at posn: %ld
+    # define E_MISSPAREN  29    // aritheval: couldn't find closing parentheses, posn: %ld
+
 # endif
