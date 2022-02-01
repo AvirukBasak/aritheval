@@ -150,6 +150,8 @@ void eval_postfix ()
             string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
         } else {
             /** @todo resolve identifiers */
+            printf ("aritheval: unrecognised token: %s\n", token);
+            exit (E_UNRETOK);
         }
     }
     // pop out remaining operators and push to queue
@@ -190,6 +192,8 @@ double eval ()
             double_stack_push (numstack, &numstack_top, number);
         } else {
             /** @todo resolve identifiers */
+            printf ("aritheval: unrecognised token: %s\n", token);
+            exit (E_UNRETOK);
         }
     }
     return double_stack_pop (numstack, &numstack_top);
