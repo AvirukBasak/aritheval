@@ -11,7 +11,7 @@
  * @param strtoken Pointer to variable that is set to the next token.
  * @return byte -- Type of token
  */
-byte nextToken (size_t *posn, char *strtoken)
+byte tokenizer_nextToken (size_t *posn, char *strtoken)
 {
     byte token_type = INVAL_TOKEN;
     size_t len = strlen (Expression);
