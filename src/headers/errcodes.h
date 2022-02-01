@@ -26,4 +26,6 @@
     # define E_DSOVFLOW   24    // double stack overflow
     # define E_DSPEKUND   25    // double stack underflow (peek)
     # define E_DSPOPUND   26    // double stack underflow (pop)
+    # define E_UNRETOK    27    // unrecognised token: %s
+    # define E_MULOPINST  28    // multiple instances of operator '%c' found at posn: %ld
 # endif
