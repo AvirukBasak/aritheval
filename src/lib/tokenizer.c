@@ -12,7 +12,7 @@
  */
 bool tokenizer_isOperator (size_t *posn)
 {
-    const char prev_char = !(*posn) ? Expression[*posn - 1] : '\0';
+    const char prev_char = (*posn) ? Expression[*posn - 1] : '\0';
     const char this_char = Expression[*posn];
     const char next_char = Expression[*posn + 1];
 
@@ -43,7 +43,6 @@ bool tokenizer_isOperator (size_t *posn)
         }
         // preceded by operator, followed by operator
         else if (strchr (OPERATORS, prev_char) && strchr (OPERATORS, next_char)) {
-            
             printf ("aritheval: multiple instances of operator '%c' found at posn: %ld\n", this_char, *posn);
             exit (E_MULOPINST);
         }
@@ -135,7 +134,7 @@ int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
         char strtoken[MAX_TOKEN_LEN] = { CH_NULL };
 
         // if token count exceeded limit
-        if (tokens > MAX_TOKENS) {
+        if (tokens > 16) {
             printf ("aritheval: exceeded maximum token count: %d tokens found\n", tokens);
             exit (E_EXTKCOUNT);
         }
@@ -145,9 +144,11 @@ int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
         switch (token_type) {
             case INT_TOKEN:
                 strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
+                if (DEBUG) printf("[ N: %s ]\n", strtoken);
                 break;
             case CHAR_TOKEN:
                 strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
+                if (DEBUG) printf("[ O: %s ]\n", strtoken);
                 break;
             default:
                 printf ("aritheval: logical error, report this output to developer\n"

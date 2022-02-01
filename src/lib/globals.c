@@ -1,4 +1,4 @@
 # include "../headers/headers.h"
 
-bool DEBUG = false;
+bool DEBUG = true;
 char Expression [MAX_STRLEN] = { CH_NULL };
