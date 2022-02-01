@@ -21,8 +21,6 @@ OPERATOR    USE     MEANING
 
 ```
 
-Braces haven't been implemented yet i.e. `()` are invalid operators.
-
 ## Valid characters
 
 ```
