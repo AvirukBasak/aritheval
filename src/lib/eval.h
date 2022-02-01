@@ -5,10 +5,8 @@
     /**
      * @brief Evaluates a postfix expression.
      *
-     * @param const bool Debug flag
-     * @param char[MAX_STRLEN] Expression
      * @return double -- The result
      */
-    double eval (const bool debug, char expression[MAX_STRLEN]);
+    double eval ();
 
 # endif

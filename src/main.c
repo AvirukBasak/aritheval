@@ -2,10 +2,8 @@
 # include "headers/errcodes.h"
 
 # include "lib/const.h"
+# include "lib/globals.h"
 # include "lib/eval.h"
-
-bool g_debug = false;
-char g_expression [MAX_STRLEN] = { CH_NULL };
 
 int main (const int argc, const char *const argv[])
 {
@@ -24,25 +22,25 @@ int main (const int argc, const char *const argv[])
         printf ("aritheval: expression can't be empty\n");
         return E_EMPEXP;
     }
-    strncpy (g_expression, argv[1], MAX_STRCPLEN);
-    size_t len = strlen (g_expression);
-    if (strchr (" )^/*", g_expression[0])) {
-        printf ("aritheval: expression can't start with '%c'\n", g_expression[0]);
+    strncpy (Expression, argv[1], MAX_STRCPLEN);
+    size_t len = strlen (Expression);
+    if (strchr (" )^/*", Expression[0])) {
+        printf ("aritheval: expression can't start with '%c'\n", Expression[0]);
         return E_STRTCHAR;
     }
-    if (strchr (" . (^/*+-", g_expression[len - 1])) {
-        printf ("aritheval: expression can't end with '%c'\n", g_expression[len - 1]);
+    if (strchr (" .(^/*+-", Expression[len - 1])) {
+        printf ("aritheval: expression can't end with '%c'\n", Expression[len - 1]);
         return E_ENDCHAR;
     }
 
     // evaluates g_postfixedexp
-    const double result = eval (g_debug, g_expression);
+    const double result = eval ();
 
-    if (g_debug) {
+    if (DEBUG) {
         printf ("\nResult = ");
     }
     printf (RSLT_ACCURACY_FORM "\n", result);
-    if (g_debug) {
+    if (DEBUG) {
         printf ("\n");
     }
     return 0;

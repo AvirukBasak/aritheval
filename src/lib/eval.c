@@ -2,17 +2,16 @@
 # include "../headers/errcodes.h"
 
 # include "const.h"
+# include "globals.h"
 # include "stack.h"
 # include "queue.h"
 # include "tokenizer.h"
 
-bool eval_debug = false;
-
 int    eval_tokens = 0;
-char   eval_tokenizedexp  [MAX_TOKENS][MAX_TOKEN_LEN]    = { { CH_NULL } };
+char   eval_tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN]    = { { CH_NULL } };
 
 // postfix queue
-char   eval_postfixqueue  [MAX_QUEUE_LEN][MAX_TOKEN_LEN] = { { CH_NULL } };
+char   eval_postfixqueue [MAX_QUEUE_LEN][MAX_TOKEN_LEN] = { { CH_NULL } };
 int    eval_postfixqueue_front = QUEUE_INIT_FRONT;
 int    eval_postfixqueue_rear = QUEUE_INIT_REAR;
 
@@ -164,16 +163,12 @@ void postfix ()
 /**
  * @brief Evaluates a postfix expression.
  *
- * @param const bool Debug flag
- * @param char[MAX_STRLEN] Expression
  * @return double -- The result
  */
-double eval (const bool debug, char expression[MAX_STRLEN])
+double eval ()
 {
-    eval_debug = debug;
-    
     // stores tokens in eval_tokenizedexp
-    eval_tokens = tokenize (eval_debug, expression, eval_tokenizedexp);
+    eval_tokens = tokenize (eval_tokenizedexp);
 
     // stores tokens in eval_postfixedexp
     postfix ();
