@@ -36,12 +36,12 @@ int main (const int argc, const char *const argv[])
     }
 
     // evaluates g_postfixedexp
-    const double result = eval(g_debug, g_expression);
+    const double result = eval (g_debug, g_expression);
 
     if (g_debug) {
         printf ("\nResult = ");
     }
-    printf ("%lf\n", result);
+    printf (RSLT_ACCURACY_FORM "\n", result);
     if (g_debug) {
         printf ("\n");
     }

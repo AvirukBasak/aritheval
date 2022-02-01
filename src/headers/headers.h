@@ -24,7 +24,7 @@
     # define CHAR_TOKEN          ( 1 )
     # define INT_TOKEN           ( 2 )
 
-    # define RSLT_ACCURACY_FORM  ( "%.5lf" )
+    # define RSLT_ACCURACY_FORM  "%.5lf"
 
     # define MAX_QUEUE_LEN       ( MAX_TOKENS )
     # define QUEUE_INIT_FRONT    ( -1 )
