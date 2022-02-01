@@ -22,7 +22,7 @@ int    eval_postfixqueue_rear = QUEUE_INIT_REAR;
  * @param oprnd2
  * @return long
  */
-double raiseToPower (long oprnd1, long oprnd2)
+double eval_raiseToPower (long oprnd1, long oprnd2)
 {
     bool negative_power = oprnd2 < 0;
     oprnd2 = llabs (oprnd2);
@@ -45,7 +45,7 @@ double raiseToPower (long oprnd1, long oprnd2)
 }
 
 /**
- * @brief Operate on two numbers based on operator passed
+ * @brief eval_operate on two numbers based on operator passed
  *
  * @param result Pointer to result, max length = RSLT_LEN
  * @param op Operator
@@ -53,7 +53,7 @@ double raiseToPower (long oprnd1, long oprnd2)
  * @param num2 Number 2
  * @return double
  */
-double operate (char op, double num1, double num2)
+double eval_operate (char op, double num1, double num2)
 {
     double result = 0.0;
     switch (op) {
@@ -62,10 +62,10 @@ double operate (char op, double num1, double num2)
         case '^': result = (double) ((long) num1 ^ (long) num2); break;
         case '%': result = (double) ((long) num1 % (long) num2); break;
         case 'e':
-            result = num1 * raiseToPower (10, (long) num2);
+            result = num1 * eval_raiseToPower (10, (long) num2);
             break;
         case 'p':
-            result = raiseToPower ((long) num1, (long) num2);
+            result = eval_raiseToPower ((long) num1, (long) num2);
             break;
         case '/': result = num1 / num2; break;
         case '*': result = num1 * num2; break;
@@ -84,7 +84,7 @@ double operate (char op, double num1, double num2)
  * @param str String to check
  * @return bool
  */
-bool isNumeric (const char *str)
+bool eval_isNumeric (const char *str)
 {
     for (int i = 0; i < strlen (str); i++) {
         if (!isdigit (str[i]) && str[i] != '.' &&  str[i] != '+' && str[i] != '-') {
@@ -100,7 +100,7 @@ bool isNumeric (const char *str)
  * @param str String to check
  * @return bool
  */
-bool isOperator (const char *str)
+bool eval_isOperator (const char *str)
 {
     return strlen (str) == 1 && strchr (OPERATORS, str[0]);
 }
@@ -112,7 +112,7 @@ bool isOperator (const char *str)
  * @param op2
  * @return bool
  */
-bool hasMorePriority (char op1, char op2)
+bool eval_hasMorePriority (char op1, char op2)
 {
     int indexOp1 = (int) (strchr (OPERATORS, op1) - OPERATORS);
     int indexOp2 = (int) (strchr (OPERATORS, op2) - OPERATORS);
@@ -122,7 +122,7 @@ bool hasMorePriority (char op1, char op2)
 /**
  * @brief Converts expression to postfix.
  */
-void postfix ()
+void eval_postfix ()
 {
     // operator stack
     int opstack_top = STACK_INIT_TOP;
@@ -130,13 +130,13 @@ void postfix ()
 
     for (int i = 0; i <= eval_tokens; i++) {
         const char *token = eval_tokenizedexp[i];
-        if (isOperator (token)) {
+        if (eval_isOperator (token)) {
             const char oprtr = token[0];
             if (stack_isempty (&opstack_top)) {
                 byte_stack_push (opstack, &opstack_top, oprtr);
             } else {
                 const char prev_oprtr = byte_stack_peek (opstack, &opstack_top);
-                if (!hasMorePriority (oprtr, prev_oprtr)) {
+                if (!eval_hasMorePriority (oprtr, prev_oprtr)) {
                     byte_stack_push (opstack, &opstack_top, oprtr);
                 } else {
                     const char prev_oprtr = byte_stack_pop (opstack, &opstack_top);
@@ -146,7 +146,7 @@ void postfix ()
                     byte_stack_push (opstack, &opstack_top, oprtr);
                 }
             }
-        } else if (isNumeric (token)) {
+        } else if (eval_isNumeric (token)) {
             string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
         } else {
             /** @todo resolve identifiers */
@@ -171,7 +171,7 @@ double eval ()
     eval_tokens = tokenize (eval_tokenizedexp);
 
     // stores tokens in eval_postfixedexp
-    postfix ();
+    eval_postfix ();
 
     // numeric stack
     int numstack_top = STACK_INIT_TOP;
@@ -179,13 +179,13 @@ double eval ()
 
     while (!queue_isempty (&eval_postfixqueue_front, &eval_postfixqueue_rear)) {
         const char *token = string_queue_pop (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear);
-        if (isOperator (token)) {
+        if (eval_isOperator (token)) {
             const char oprtr = token[0];
             const double oprnd2 = double_stack_pop (numstack, &numstack_top);
             const double oprnd1 = double_stack_pop (numstack, &numstack_top);
-            const double result = operate (oprtr, oprnd1, oprnd2);
+            const double result = eval_operate (oprtr, oprnd1, oprnd2);
             double_stack_push (numstack, &numstack_top, result);
-        } else if (isNumeric (token)) {
+        } else if (eval_isNumeric (token)) {
             const double number = atof (token);
             double_stack_push (numstack, &numstack_top, number);
         } else {

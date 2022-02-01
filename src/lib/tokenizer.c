@@ -128,7 +128,7 @@ int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
         }
 
         size_t posn = i;
-        byte token_type = nextToken (&posn, strtoken);
+        byte token_type = tokenizer_nextToken (&posn, strtoken);
         switch (token_type) {
             case INT_TOKEN:
                 strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
