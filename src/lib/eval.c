@@ -188,7 +188,7 @@ void eval_postfix ()
             byte_stack_pop (opstack, &opstack_top);
         } else {
             /** @todo resolve identifiers */
-            printf ("aritheval: unrecognised token: %s\n", token);
+            printf ("aritheval: unrecognised token: %s, posn: %ld\n", token, i);
             exit (E_UNRETOK);
         }
     }
@@ -230,6 +230,10 @@ double eval ()
             double_stack_push (numstack, &numstack_top, number);
         } else {
             /** @todo resolve identifiers */
+            if (!strcmp ("(", token)) {
+                printf ("aritheval: mismatched parentheses\n");
+                exit (E_MISSPAREN);
+            }
             printf ("aritheval: unrecognised token: %s\n", token);
             exit (E_UNRETOK);
         }
