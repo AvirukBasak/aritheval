@@ -5,6 +5,42 @@
 # include "globals.h"
 
 /**
+ * @brief Returns true if operator, else false
+ *
+ * @param size_t* Position of concerned character
+ * @return bool
+ */
+bool tokenizer_isOperator (size_t *posn) {
+
+    const char prev_char = Expression[*posn - 1];
+    const char this_char = Expression[*posn];
+    const char next_char = Expression[*posn + 1];
+
+    // if character is operator
+    if (strchr (OPERATORS, this_char)) {
+        // preceded and followed by non-operators
+        if (strchr (OPERATORS, prev_char) && strchr (OPERATORS, next_char)) {
+            return true;
+        }
+        // preceded by non-operator, followed by operator
+        else if (!strchr (OPERATORS, prev_char) && strchr (OPERATORS, next_char)) {
+            return true;
+        }
+        // preceded by operator, followed by non-operator
+        else if (strchr (OPERATORS, prev_char) && !strchr (OPERATORS, next_char)) {
+            return false;
+        }
+        // preceded by operator, followed by operator
+        else {
+            printf ("aritheval: multiple instances of operator '%c' found at posn: %ld\n", this_char, *posn);
+            exit (E_MULOPINST);
+        }
+    } else {
+        return false;
+    }
+}
+
+/**
  * @brief Returns type of next token and sets strtoken to that token.
  *
  * @param posn Posn From where to look for tokens, gets updated.
