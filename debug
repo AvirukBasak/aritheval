@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export DEBUG="true"
 clear
 gcc -g ./src/*.c ./src/lib/*.c -o ./builds/aritheval-debug
 echo

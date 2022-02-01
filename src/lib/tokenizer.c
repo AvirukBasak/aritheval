@@ -5,45 +5,50 @@
 # include "globals.h"
 
 /**
- * @brief Returns true if operator, else false
+ * @brief Returns true if non number, else false
  *
  * @param size_t* Position of concerned character
  * @return bool
  */
-bool tokenizer_isOperator (size_t *posn)
+bool tokenizer_isNonNumeric (size_t posn)
 {
-    const char prev_char = (*posn) ? Expression[*posn - 1] : '\0';
-    const char this_char = Expression[*posn];
-    const char next_char = Expression[*posn + 1];
+    const char prev_char = posn ? Expression[posn - 1] : '\0';
+    const char this_char = Expression[posn];
+    const char next_char = Expression[posn + 1];
 
     // check if character is valid
     if (!strchr (VALID_CHARS, this_char)) {
-        printf ("aritheval: invalid character '%c' at posn: %ld\n", this_char, *posn);
+        printf ("aritheval: invalid character '%c' at posn: %ld\n", this_char, posn);
         exit (E_INVCHAR);
     }
 
-    // if character is operator
+    // spaces are treated as non numbers
+    if (strchr ("\n\t\f\r ", this_char)) {
+        return true;
+    }
+
+    // if character is non number
     if (strchr (OPERATORS, this_char)) {
-        // preceded and followed by non-operators
+        // preceded and followed by number
         if (!strchr (OPERATORS, prev_char) && !strchr (OPERATORS, next_char)) {
             return true;
         }
-        // preceded by non-operator, followed by operator
+        // preceded by number, followed by non numbers
         else if (!strchr (OPERATORS, prev_char) && strchr (OPERATORS, next_char)) {
             return true;
         }
-        // preceded by operator, followed by non-operator
+        // preceded by number, followed by number
         else if (strchr (OPERATORS, prev_char) && !strchr (OPERATORS, next_char)) {
             // only + or - is allowed to precede a digit
             if (strchr ("+-", this_char)) {
                 return false;
             }
-            printf ("aritheval: invalid use of operator '%c' at posn: %ld\n", this_char, *posn);
+            printf ("aritheval: invalid use of operator '%c' at posn: %ld\n", this_char, posn);
             exit (E_INVCHAR);
         }
-        // preceded by operator, followed by operator
+        // preceded by non numbers, followed by non numbers
         else if (strchr (OPERATORS, prev_char) && strchr (OPERATORS, next_char)) {
-            printf ("aritheval: multiple instances of operator '%c' found at posn: %ld\n", this_char, *posn);
+            printf ("aritheval: multiple instances of operator '%c' found at posn: %ld\n", this_char, posn);
             exit (E_MULOPINST);
         }
     } else if (strchr ("()", this_char)) {
@@ -67,7 +72,12 @@ byte tokenizer_nextToken (size_t *posn, char *strtoken)
 
     char c = Expression[*posn];
 
-    if (tokenizer_isOperator (posn)) {
+    // ignoring delimiters and spaces
+    while (strchr ("\n\t\f\r ", c)) {
+        c = Expression[++(*posn)];
+    }
+
+    if (tokenizer_isNonNumeric (*posn)) {
         (*posn)++;
         strtoken[0] = c;
         strtoken[1] = 0;
@@ -96,8 +106,8 @@ byte tokenizer_nextToken (size_t *posn, char *strtoken)
                  */
                 strncat (strtoken, &c, 1);
             }
-            // if c is digit or begins with '+' or '-', concatenate it to strtoken
-            else if (isdigit (c) || !*posn && strchr ("+-", c)) {
+            // if c is digit or '+' or '-', concatenate it to strtoken
+            else if (isdigit (c) || !tokenizer_isNonNumeric (*posn)) {
                 strncat (strtoken, &c, 1);
             }
             else {
@@ -134,7 +144,7 @@ int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
         char strtoken[MAX_TOKEN_LEN] = { CH_NULL };
 
         // if token count exceeded limit
-        if (tokens > 16) {
+        if (tokens > MAX_TOKENS) {
             printf ("aritheval: exceeded maximum token count: %d tokens found\n", tokens);
             exit (E_EXTKCOUNT);
         }
