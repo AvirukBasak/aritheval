@@ -1,3 +1,7 @@
+# ifndef __clang__
+# error compiler is not 'clang', compilation may fail
+# endif
+
 # include "headers/headers.h"
 # include "headers/errcodes.h"
 
