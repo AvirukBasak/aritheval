@@ -23,7 +23,7 @@ bool tokenizer_isNonNumeric (size_t posn)
     }
 
     // spaces are treated as non numbers
-    if (strchr ("\n\t\f\r ", this_char)) {
+    if (strchr (" \t\n\r\f", this_char)) {
         return true;
     }
 
@@ -73,7 +73,7 @@ byte tokenizer_nextToken (size_t *posn, char *strtoken)
     char c = Expression[*posn];
 
     // ignoring delimiters and spaces
-    while (strchr ("\n\t\f\r ", c)) {
+    while (strchr (" \t\n\r\f ", c)) {
         c = Expression[++(*posn)];
     }
 
