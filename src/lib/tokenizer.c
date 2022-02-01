@@ -10,8 +10,8 @@
  * @param size_t* Position of concerned character
  * @return bool
  */
-bool tokenizer_isOperator (size_t *posn) {
-
+bool tokenizer_isOperator (size_t *posn)
+{
     const char prev_char = !(*posn) ? Expression[*posn - 1] : '\0';
     const char this_char = Expression[*posn];
     const char next_char = Expression[*posn + 1];
@@ -58,17 +58,60 @@ bool tokenizer_isOperator (size_t *posn) {
  *
  * @param posn Posn From where to look for tokens, gets updated.
  * @param strtoken Pointer to variable that is set to the next token.
- * @return byte -- Type of token
+ * @return byte
+- Type of token
  */
 byte tokenizer_nextToken (size_t *posn, char *strtoken)
 {
     byte token_type = INVAL_TOKEN;
     size_t len = strlen (Expression);
 
+    char c = Expression[*posn];
+
     if (tokenizer_isOperator (posn)) {
-        
+        (*posn)++;
+        strtoken[0] = c;
+        strtoken[1] = 0;
+        token_type = CHAR_TOKEN;
     } else {
-        
+        // tracks if more than 1 dot was found
+        bool dot_found = false;
+        // while *posn < len, Loop through the EXPRESSION
+        for (size_t i = 0; ; i++, (*posn)++) {
+            // if token length exceeded limit
+            if (i > MAX_TOKEN_LEN) {
+                printf ("aritheval: exceeded maximum token length of %d bytes\n", MAX_TOKEN_LEN);
+                exit (E_EXMXTLEN);
+            }
+            char c = Expression[*posn];
+            // if c is '.', concatenate it to strtoken
+            if (c == '.') {
+                if (dot_found) {
+                    printf ("aritheval: excess dot found at posn: %ld\n", *posn);
+                    exit (E_EXDOT);
+                } else {
+                    dot_found = true;
+                }
+                /* strncat () concatenates from null character of string.
+                 * since we wish to overwrite the strtoken with new token, we set this
+                 */
+                strncat (strtoken, &c, 1);
+            }
+            // if c is digit or begins with '+' or '-', concatenate it to strtoken
+            else if (isdigit (c) || !*posn && strchr ("+-", c)) {
+                strncat (strtoken, &c, 1);
+            }
+            else {
+                if (strtoken[i - 1] == '.') {
+                    printf ("aritheval: number can't end with a dot: %ld\n", *posn);
+                    exit (E_NOENDDOT);
+                }
+                // set token_type, end strtoken with null and break loop
+                token_type = INT_TOKEN;
+                strtoken[i] = 0;
+                break;
+            }
+        }
     }
 
     return token_type;
@@ -78,7 +121,8 @@ byte tokenizer_nextToken (size_t *posn, char *strtoken)
  * @brief Tokenize expression
  *
  * @param char [MAX_TOKENS][MAX_TOKEN_LEN] Writes tokens to this array
- * @return int -- The number of tokens
+ * @return int
+- The number of tokens
  */
 int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
 {
