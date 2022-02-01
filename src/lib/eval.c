@@ -86,8 +86,10 @@ double eval_operate (char op, double num1, double num2)
  */
 bool eval_isNumeric (const char *str)
 {
-    for (int i = 0; i < strlen (str); i++) {
-        if (!isdigit (str[i]) && str[i] != '.' &&  str[i] != '+' && str[i] != '-') {
+    for (size_t i = 0; i < strlen (str); i++) {
+        if (i > 0 && strchr ("+-", str[i])) {
+            return false;
+        } else if (!isdigit (str[i]) && !strchr (".+-", str[i])) {
             return false;
         }
     }
@@ -128,7 +130,7 @@ void eval_postfix ()
     int opstack_top = STACK_INIT_TOP;
     byte opstack [MAX_QUEUE_LEN] = { CH_NULL };
 
-    for (int i = 0; i <= eval_tokens; i++) {
+    for (size_t i = 0; i <= eval_tokens; i++) {
         const char *token = eval_tokenizedexp[i];
         if (eval_isOperator (token)) {
             const char oprtr = token[0];
