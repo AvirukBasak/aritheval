@@ -1,3 +1,8 @@
+# include "../headers/headers.h"
+# include "../headers/errcodes.h"
+
+# include "const.h"
+
 /**
  * @brief Pushes item to char * queue.
  *

@@ -1,3 +1,11 @@
+# include "../headers/headers.h"
+# include "../headers/errcodes.h"
+
+# include "const.h"
+
+bool tokenizer_debug = false;
+char *tokenizer_expression;
+
 /**
  * @brief Returns type of next token and sets strtoken to that token.
  *
@@ -8,10 +16,10 @@
 byte nextToken (size_t *posn, char *strtoken)
 {
     byte token_type = INVAL_TOKEN;
-    size_t len = strlen (g_expression);
+    size_t len = strlen (tokenizer_expression);
 
     // get character
-    char c = g_expression[*posn];
+    char c = tokenizer_expression[*posn];
 
     if (!isdigit (c) && c != '.') {
 
@@ -41,14 +49,14 @@ byte nextToken (size_t *posn, char *strtoken)
         }
 
         // checks next index for valid characters
-        c = g_expression[*posn];
+        c = tokenizer_expression[*posn];
         ptr = strchr (VALID_CHARS, c);
         if (!ptr) {
             printf ("aritheval: invalid character at posn: %ld\n", *posn);
             exit (E_INVCHAR);
         } else if (is_cl_bracket) {
-        } else if (!isdigit (g_expression[*posn]) && g_expression[*posn] != '.' && g_expression[*posn] != '('
-                                                  && g_expression[*posn] != '+' && g_expression[*posn] != '-') {
+        } else if (!isdigit (tokenizer_expression[*posn]) && tokenizer_expression[*posn] != '.' && tokenizer_expression[*posn] != '('
+                                                  && tokenizer_expression[*posn] != '+' && tokenizer_expression[*posn] != '-') {
             printf ("aritheval: unsupported operation at posn: %ld\n", *posn);
             exit (E_UNSUPOP);
         }
@@ -68,7 +76,7 @@ byte nextToken (size_t *posn, char *strtoken)
                 exit (E_EXMXTLEN);
             }
  
-            char c = g_expression[*posn];
+            char c = tokenizer_expression[*posn];
 
             // if c is a digit, concatenate it to strtoken
             if (c == '.') {
@@ -101,18 +109,28 @@ byte nextToken (size_t *posn, char *strtoken)
 
 /**
  * @brief Tokenize expression
+ *
+ * @param const bool Debug flag
+ * @param char[MAX_STRLEN] Expression
+ * @oaram char[MAX_TOKENS][MAX_TOKEN_LEN] Writes tokens to this array
+ * @return int -- The number of tokens
  */
-void tokenize ()
+int tokenize (const bool debug, char expression[MAX_STRLEN], char tokenizedexp[MAX_TOKENS][MAX_TOKEN_LEN])
 {
+    tokenizer_debug = debug;
+    tokenizer_expression = expression;
+
+    int tokens = 0;
+
     // Loop through the entire input
-    for (size_t i = 0; i < strlen (g_expression); g_tokens++) {
+    for (size_t i = 0; i < strlen (tokenizer_expression); tokens++) {
 
         // stores the next token
         char strtoken[MAX_TOKEN_LEN] = { CH_NULL };
 
         // if token count exceeded limit
-        if (g_tokens > MAX_TOKENS) {
-            printf ("aritheval: exceeded maximum token count: %d tokens found\n", g_tokens);
+        if (tokens > MAX_TOKENS) {
+            printf ("aritheval: exceeded maximum token count: %d tokens found\n", tokens);
             exit (E_EXTKCOUNT);
         }
 
@@ -120,10 +138,10 @@ void tokenize ()
         byte token_type = nextToken (&posn, strtoken);
         switch (token_type) {
             case INT_TOKEN:
-                strncpy (g_tokenizedexp[g_tokens], strtoken, strlen (strtoken));
+                strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
                 break;
             case CHAR_TOKEN:
-                strncpy (g_tokenizedexp[g_tokens], strtoken, strlen (strtoken));
+                strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
                 break;
             default:
                 printf ("aritheval: logical error, report output to developer\n"
@@ -133,5 +151,6 @@ void tokenize ()
         }
         i = posn;
     }
-    g_tokens--;
+    tokens--;
+    return tokens;
 }

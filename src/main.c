@@ -1,11 +1,11 @@
-# include "headers.h"
-# include "errcodes.h"
-# include "typedefs.c"
-# include "globalvars.c"
-# include "stack.c"
-# include "queue.c"
-# include "tokenizer.c"
-# include "eval.c"
+# include "headers/headers.h"
+# include "headers/errcodes.h"
+
+# include "lib/const.h"
+# include "lib/eval.h"
+
+bool g_debug = false;
+char g_expression [MAX_STRLEN] = { CH_NULL };
 
 int main (const int argc, const char *const argv[])
 {
@@ -34,9 +34,10 @@ int main (const int argc, const char *const argv[])
         printf ("aritheval: expression can't end with '%c'\n", g_expression[len - 1]);
         return E_ENDCHAR;
     }
-    tokenize ();                     // stores tokens in g_tokenizedexp
-    postfix ();                      // stores tokens in g_postfixedexp
-    const double result = eval();    // evaluates g_postfixedexp
+
+    // evaluates g_postfixedexp
+    const double result = eval(g_debug, g_expression);
+
     if (g_debug) {
         printf ("\nResult = ");
     }

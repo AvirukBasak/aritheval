@@ -1,3 +1,21 @@
+# include "../headers/headers.h"
+# include "../headers/errcodes.h"
+
+# include "const.h"
+# include "stack.h"
+# include "queue.h"
+# include "tokenizer.h"
+
+bool eval_debug = false;
+
+int    eval_tokens = 0;
+char   eval_tokenizedexp  [MAX_TOKENS][MAX_TOKEN_LEN]    = { { CH_NULL } };
+
+// postfix queue
+char   eval_postfixqueue  [MAX_QUEUE_LEN][MAX_TOKEN_LEN] = { { CH_NULL } };
+int    eval_postfixqueue_front = QUEUE_INIT_FRONT;
+int    eval_postfixqueue_rear = QUEUE_INIT_REAR;
+
 /**
  * @brief Calculate exponential
  *
@@ -111,8 +129,8 @@ void postfix ()
     int opstack_top = STACK_INIT_TOP;
     byte opstack [MAX_QUEUE_LEN] = { CH_NULL };
 
-    for (int i = 0; i <= g_tokens; i++) {
-        const char *token = g_tokenizedexp[i];
+    for (int i = 0; i <= eval_tokens; i++) {
+        const char *token = eval_tokenizedexp[i];
         if (isOperator (token)) {
             const char oprtr = token[0];
             if (stack_isempty (&opstack_top)) {
@@ -125,12 +143,12 @@ void postfix ()
                     const char prev_oprtr = byte_stack_pop (opstack, &opstack_top);
                     char token[MAX_TOKEN_LEN] = { CH_NULL };
                     token[0] = prev_oprtr;
-                    string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+                    string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
                     byte_stack_push (opstack, &opstack_top, oprtr);
                 }
             }
         } else if (isNumeric (token)) {
-            string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+            string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
         } else {
             /** @todo resolve identifiers */
         }
@@ -139,23 +157,33 @@ void postfix ()
     while (!stack_isempty (&opstack_top)) {
         char token[MAX_TOKEN_LEN] = { CH_NULL };
         token[0] = byte_stack_pop (opstack, &opstack_top);
-        string_queue_push (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear, token);
+        string_queue_push (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear, token);
     }
 }
 
 /**
  * @brief Evaluates a postfix expression.
  *
+ * @param const bool Debug flag
+ * @param char[MAX_STRLEN] Expression
  * @return double -- The result
  */
-double eval ()
+double eval (const bool debug, char expression[MAX_STRLEN])
 {
+    eval_debug = debug;
+    
+    // stores tokens in eval_tokenizedexp
+    eval_tokens = tokenize (eval_debug, expression, eval_tokenizedexp);
+
+    // stores tokens in eval_postfixedexp
+    postfix ();
+
     // numeric stack
     int numstack_top = STACK_INIT_TOP;
     double numstack [MAX_QUEUE_LEN] = { 0.0 };
 
-    while (!queue_isempty (&g_postfixqueue_front, &g_postfixqueue_rear)) {
-        const char *token = string_queue_pop (g_postfixqueue, &g_postfixqueue_front, &g_postfixqueue_rear);
+    while (!queue_isempty (&eval_postfixqueue_front, &eval_postfixqueue_rear)) {
+        const char *token = string_queue_pop (eval_postfixqueue, &eval_postfixqueue_front, &eval_postfixqueue_rear);
         if (isOperator (token)) {
             const char oprtr = token[0];
             const double oprnd2 = double_stack_pop (numstack, &numstack_top);

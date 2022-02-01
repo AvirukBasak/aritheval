@@ -32,5 +32,9 @@
 
     # define MAX_STACK_LEN       ( MAX_TOKENS )
     # define STACK_INIT_TOP      ( -1 )
-    
+
+    typedef char byte;
+    typedef byte bool;
+    typedef char *string;
+
 # endif
