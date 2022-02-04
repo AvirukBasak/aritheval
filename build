@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-clear
-gcc $@ -Ofast ./src/*.c ./src/lib/*.c -o ./builds/aritheval 2>&1 | tee ./builds/build.log.c
