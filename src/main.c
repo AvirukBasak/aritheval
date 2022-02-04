@@ -40,12 +40,21 @@ int main (const int argc, const char *const argv[])
         return E_ENDCHAR;
     }
 
-    // evaluates g_postfixedexp
-    if (DEBUG) printf ("\n");
+# ifdef DEBUG
+    printf ("\n");
+# endif
+
     const double result = eval ();
-    if (DEBUG) printf ("Result = ");
+
+# ifdef DEBUG
+    printf ("Result = ");
+# endif
+
     printf (RSLT_ACCURACY_FORM "\n", result);
-    if (DEBUG) printf ("\n");
+
+# ifdef DEBUG
+    printf ("\n");
+# endif
 
     return 0;
 }

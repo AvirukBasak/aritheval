@@ -153,11 +153,15 @@ int tokenize (char tokenizedexp [MAX_TOKENS][MAX_TOKEN_LEN])
         switch (token_type) {
             case INT_TOKEN:
                 strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
-                if (DEBUG) printf("[ N: %s ]\n", strtoken);
+# ifdef DEBUG
+                printf("[ N: %s ]\n", strtoken);
+# endif
                 break;
             case CHAR_TOKEN:
                 strncpy (tokenizedexp[tokens], strtoken, strlen (strtoken));
-                if (DEBUG) printf("[ O: %s ]\n", strtoken);
+# ifdef DEBUG
+                printf("[ O: %s ]\n", strtoken);
+# endif
                 break;
             default:
                 printf ("aritheval: logical error, report this output to developer\n"
