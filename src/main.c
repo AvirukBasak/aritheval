@@ -11,17 +11,6 @@
 
 int main (const int argc, const char *const argv[])
 {
-    // sets debug flag based on environment variable
-    char *ENV_DEBUG = getenv ("DEBUG");
-    if (ENV_DEBUG && strlen (ENV_DEBUG) == 4) {
-        if ((ENV_DEBUG[0] == 't' ||  ENV_DEBUG[0] == 'T')
-        &&  (ENV_DEBUG[1] == 'r' ||  ENV_DEBUG[1] == 'R')
-        &&  (ENV_DEBUG[2] == 'u' ||  ENV_DEBUG[2] == 'U')
-        &&  (ENV_DEBUG[3] == 'e' ||  ENV_DEBUG[3] == 'E')) {
-            DEBUG = true;
-        }
-    }
-
     if (argc < 2) {
         printf ("aritheval: no expression provided\n"
                 "USAGE: aritheval \"[expression]\"\n");
