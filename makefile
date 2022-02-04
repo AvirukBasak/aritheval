@@ -16,7 +16,7 @@ options:
 	$(info $(TAB)make  o | options)
 	$(info $(TAB)make  d | debug)
 	$(info $(TAB)make  b | build)
-	$(info $(TAB)make  r | run)
+	$(info $(TAB)make  r | run exp="[expression]")
 	$(info $(TAB)make  c | clean)
 	$(info $(TAB)make cf | cleanf)
 	@exit
