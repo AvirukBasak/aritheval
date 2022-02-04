@@ -68,7 +68,6 @@ bool tokenizer_isNonNumeric (size_t posn)
 byte tokenizer_nextToken (size_t *posn, char *strtoken)
 {
     byte token_type = INVAL_TOKEN;
-    size_t len = strlen (Expression);
 
     char c = Expression[*posn];
 
