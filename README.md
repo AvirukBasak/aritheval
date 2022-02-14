@@ -8,10 +8,10 @@ $ make run exp="[expression]"
 ```
 
 ### Example
-<pre>
+```bash
 $ make
 $ make run exp="1+3/9*\(0-8\)^2"
-</pre>
+```
 
 
 ## Operators
