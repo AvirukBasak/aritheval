@@ -8,7 +8,7 @@ $ make run exp="[expression]"
 ```
 
 ### Example
-```bash
+```text
 mint@aviruk:~/Git/ArithEval$ make
 mkdir -p ./bin
 gcc -Wall -Ofast ./src/lib/*.c ./src/*.c -o ./bin/aritheval
