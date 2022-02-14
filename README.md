@@ -9,11 +9,8 @@ $ make run exp="[expression]"
 
 ### Example
 <pre>
-<font style="color: darkgreen">mint@aviruk</font>:<font style="color: dodgerblue">~/Git/ArithEval</font>$ make
-mkdir -p ./bin
-gcc -Wall -Ofast ./src/lib/*.c ./src/*.c -o ./bin/aritheval
-<font style="color: darkgreen">mint@aviruk</font>:<font style="color: dodgerblue">~/Git/ArithEval</font>$ make run exp="1+3/9*\(0-8\)^2"
--3.00000
+$ make
+$ make run exp="1+3/9*\(0-8\)^2"
 </pre>
 
 
