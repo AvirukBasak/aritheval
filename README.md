@@ -7,6 +7,16 @@ $ make
 $ make run exp="[expression]"
 ```
 
+### Example
+```bash
+mint@aviruk:~/Git/ArithEval$ make
+mkdir -p ./bin
+gcc -Wall -Ofast ./src/lib/*.c ./src/*.c -o ./bin/aritheval
+mint@aviruk:~/Git/ArithEval$ make run exp="1+3/9*\(0-8\)^2"
+-3.00000
+```
+
+
 ## Operators
 
 Following operators are supported, in the order of their precedence.
