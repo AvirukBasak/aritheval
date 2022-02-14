@@ -4,7 +4,7 @@ Arithmetic evaluation program in C.
 ## Usage
 ```bash
 $ make
-$ make run "[expression]"
+$ make run exp="[expression]"
 ```
 
 ## Operators
