@@ -25,7 +25,7 @@ OPERATOR    USE     MEANING
    p       5 p 3    5 to the power of 3
    /       5 / 3    5 divided by 3
    %       5 % 3    remainder of 5 divided by 3
-   *       5 * 3    remainder of 5 multiplied by 3
+   *       5 * 3    product of 5 and 3
    +       5 + 3    sum of 5 and 3
    -       5 - 3    difference of 5 and 3
    ^       5 ^ 3    binary xor of 5 and 3
