@@ -47,7 +47,7 @@ debug: clscr
 	$(DBG) $(DBG_PATH)
 
 # compile source to bin path
-build: clscr
+build:
 	mkdir -p $(BIN_DIR)
 	$(CC) $(REL_FLAGS) $(SRC_PATH) -o $(REL_PATH)
 
