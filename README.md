@@ -1,6 +1,12 @@
 # ArithEval
 Arithmetic evaluation program in C.
 
+## Usage
+```bash
+$ make
+$ make run "[expression]"
+```
+
 ## Operators
 
 Following operators are supported, in the order of their precedence.
