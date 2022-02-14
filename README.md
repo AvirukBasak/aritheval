@@ -8,13 +8,13 @@ $ make run exp="[expression]"
 ```
 
 ### Example
-```text
-mint@aviruk:~/Git/ArithEval$ make
+<pre>
+<font style="color: darkgreen">mint@aviruk</font>:<font style="color: dodgerblue">~/Git/ArithEval</font>$ make
 mkdir -p ./bin
 gcc -Wall -Ofast ./src/lib/*.c ./src/*.c -o ./bin/aritheval
-mint@aviruk:~/Git/ArithEval$ make run exp="1+3/9*\(0-8\)^2"
+<font style="color: darkgreen">mint@aviruk</font>:<font style="color: dodgerblue">~/Git/ArithEval</font>$ make run exp="1+3/9*\(0-8\)^2"
 -3.00000
-```
+</pre>
 
 
 ## Operators
