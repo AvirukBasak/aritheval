@@ -10,7 +10,7 @@ $ make run exp="[expression]"
 ### Example
 ```bash
 $ make
-$ make run exp="1+3/9*\(0-8\)^2"
+$ make run exp="1+3/9*\(0-8\)p2"
 ```
 
 
